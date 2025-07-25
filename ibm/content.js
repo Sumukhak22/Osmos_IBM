@@ -6,13 +6,39 @@ let interactionData = {
     scrolls: 0
 };
 
+// Enhanced behavior tracking data
+let behaviorData = {
+    url: window.location.href,
+    clicks: 0,
+    scrolls: 0,
+    keystrokes: 0,
+    mouseMovements: 0,
+    typingSpeed: {
+        totalKeys: 0,
+        totalTime: 0,
+        sessions: []
+    },
+    timeOfDay: new Date().toISOString(),
+    pageLoadTime: Date.now()
+};
+
 let lastMouseMove = 0;
 let typingSpeed = [];
 let lastKeyTime = 0;
 
+// Enhanced typing session tracking
+let typingSession = {
+    startTime: null,
+    keyCount: 0
+};
+
+let mouseMoveThrottle = 100; // ms
+
 // Track mouse clicks
 document.addEventListener('click', () => {
     interactionData.clicks++;
+    behaviorData.clicks++;
+    saveBehaviorData();
 }, true);
 
 // Track mouse movements (throttled)
@@ -22,6 +48,13 @@ document.addEventListener('mousemove', (e) => {
         interactionData.mouseMovements++;
         lastMouseMove = now;
     }
+    
+    // Enhanced behavior tracking
+    if (now - lastMouseMove > mouseMoveThrottle) {
+        behaviorData.mouseMovements++;
+        lastMouseMove = now;
+        saveBehaviorData();
+    }
 }, true);
 
 // Track keystrokes and typing speed
@@ -29,7 +62,7 @@ document.addEventListener('keydown', (e) => {
     const now = Date.now();
     interactionData.keystrokes++;
     
-    // Calculate typing speed
+    // Calculate typing speed (existing logic)
     if (lastKeyTime > 0) {
         const timeDiff = now - lastKeyTime;
         typingSpeed.push(timeDiff);
@@ -40,12 +73,112 @@ document.addEventListener('keydown', (e) => {
         }
     }
     lastKeyTime = now;
+    
+    // Enhanced behavior tracking
+    if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') {
+        behaviorData.keystrokes++;
+        
+        // Typing speed calculation
+        const currentTime = Date.now();
+        
+        if (!typingSession.startTime) {
+            typingSession.startTime = currentTime;
+            typingSession.keyCount = 1;
+        } else {
+            typingSession.keyCount++;
+            
+            // End session after 2 seconds of no typing
+            clearTimeout(typingSession.timeout);
+            typingSession.timeout = setTimeout(() => {
+                if (typingSession.keyCount > 5) { // Only record sessions with meaningful typing
+                    const sessionDuration = (currentTime - typingSession.startTime) / 1000; // seconds
+                    const wpm = (typingSession.keyCount / 5) / (sessionDuration / 60); // words per minute
+                    
+                    behaviorData.typingSpeed.sessions.push({
+                        wpm: Math.round(wpm),
+                        duration: sessionDuration,
+                        keyCount: typingSession.keyCount,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    behaviorData.typingSpeed.totalKeys += typingSession.keyCount;
+                    behaviorData.typingSpeed.totalTime += sessionDuration;
+                }
+                
+                // Reset session
+                typingSession = { startTime: null, keyCount: 0 };
+                saveBehaviorData();
+            }, 2000);
+        }
+        
+        saveBehaviorData();
+    }
 }, true);
 
 // Track scrolling
 document.addEventListener('scroll', () => {
     interactionData.scrolls++;
+    
+    // Enhanced behavior tracking with throttling
+    let scrollThrottle = false;
+    if (!scrollThrottle) {
+        behaviorData.scrolls++;
+        saveBehaviorData();
+        scrollThrottle = true;
+        setTimeout(() => { scrollThrottle = false; }, 100);
+    }
 }, true);
+
+// Track page visibility changes
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        // Page is now hidden
+        saveBehaviorData();
+    } else {
+        // Page is now visible
+        behaviorData.timeOfDay = new Date().toISOString();
+    }
+});
+
+// Track page unload
+window.addEventListener('beforeunload', () => {
+    saveBehaviorData();
+});
+
+// Enhanced save behavior data function
+function saveBehaviorData() {
+    const dataToSave = {
+        ...behaviorData,
+        sessionDuration: Date.now() - behaviorData.pageLoadTime,
+        lastUpdated: new Date().toISOString()
+    };
+    
+    // Save to chrome storage
+    chrome.storage.local.get(['behaviorData'], (result) => {
+        const allBehaviorData = result.behaviorData || {};
+        const urlKey = new URL(window.location.href).hostname;
+        
+        if (!allBehaviorData[urlKey]) {
+            allBehaviorData[urlKey] = [];
+        }
+        
+        // Update existing entry for this session or add new one
+        const existingIndex = allBehaviorData[urlKey].findIndex(
+            entry => entry.pageLoadTime === behaviorData.pageLoadTime
+        );
+        
+        if (existingIndex >= 0) {
+            allBehaviorData[urlKey][existingIndex] = dataToSave;
+        } else {
+            allBehaviorData[urlKey].push(dataToSave);
+        }
+        
+        chrome.storage.local.set({ behaviorData: allBehaviorData });
+    });
+    
+    // Notify background script
+    chrome.runtime.sendMessage({ type: 'UPDATE_BEHAVIOR_DATA' }).catch(() => {});
+}
 
 // Send interaction data to background script every 10 seconds
 setInterval(() => {
@@ -68,6 +201,12 @@ setInterval(() => {
         interactionData = { clicks: 0, keystrokes: 0, mouseMovements: 0, scrolls: 0 };
     }
 }, 10000);
+
+// Initial save for behavior data
+saveBehaviorData();
+
+// Periodic save every 30 seconds
+setInterval(saveBehaviorData, 30000);
 
 // Function to create floating notification (injected by background script)
 function createFloatingNotification(domain, question) {

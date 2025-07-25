@@ -17,6 +17,7 @@
         <div class="tabs">
             <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
             <button class="tab-btn" data-tab="settings">Settings</button>
+            <button class="tab-btn" data-tab="behavior">User Behavior</button>
         </div>
 
         <!-- Dashboard Tab -->
@@ -78,6 +79,50 @@
                     <input type="checkbox" id="enableStrictMode">
                     Enable strict mode (blocking popups)
                 </label>
+            </div>
+        </div>
+
+        <!-- User Behavior Tab -->
+        <div id="behavior" class="tab-content">
+            <div class="section">
+                <h3>User Behavior Tracker</h3>
+                
+                <div class="behavior-stats">
+                    <div class="stat">
+                        <span class="stat-label">Session Time:</span>
+                        <span class="stat-value" id="sessionTime">Loading...</span>
+                    </div>
+                    
+                    <div class="stat">
+                        <span class="stat-label">Tab Switches:</span>
+                        <span class="stat-value" id="tabSwitches">Loading...</span>
+                    </div>
+                    
+                    <div class="stat">
+                        <span class="stat-label">Current URL:</span>
+                        <span class="stat-value" id="currentUrl">Loading...</span>
+                    </div>
+                    
+                    <div class="stat">
+                        <span class="stat-label">Page Clicks:</span>
+                        <span class="stat-value" id="pageClicks">Loading...</span>
+                    </div>
+                    
+                    <div class="stat">
+                        <span class="stat-label">Page Scrolls:</span>
+                        <span class="stat-value" id="pageScrolls">Loading...</span>
+                    </div>
+                    
+                    <div class="stat">
+                        <span class="stat-label">Mouse Movements:</span>
+                        <span class="stat-value" id="mouseMovements">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="behavior-actions">
+                    <button id="exportBtn">Export Data to JSON</button>
+                    <button id="clearBtn">Clear All Data</button>
+                </div>
             </div>
         </div>
     </div>

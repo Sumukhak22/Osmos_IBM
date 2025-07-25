@@ -6,6 +6,11 @@ const activeTimeEl = document.getElementById('activeTime');
 const distractionTimeEl = document.getElementById('distractionTime');
 const productiveTimeEl = document.getElementById('productiveTime');
 
+// Behavior tracking timer
+let behaviorUpdateInterval = null;
+let currentTabStartTime = null;
+let currentTabUrl = null;
+
 // Sound functionality
 function playSound() {
     try {
@@ -34,8 +39,30 @@ tabBtns.forEach(btn => {
                 content.classList.add('active');
             }
         });
+        
+        // Load behavior stats when behavior tab is clicked
+        if (tabId === 'behavior') {
+            loadBehaviorStats();
+            startBehaviorStatsUpdate();
+        } else {
+            stopBehaviorStatsUpdate();
+        }
     });
 });
+
+// Start real-time behavior stats updates
+function startBehaviorStatsUpdate() {
+    stopBehaviorStatsUpdate(); // Clear any existing interval
+    behaviorUpdateInterval = setInterval(loadBehaviorStats, 500); // Update every 500ms for real-time feel
+}
+
+// Stop behavior stats updates
+function stopBehaviorStatsUpdate() {
+    if (behaviorUpdateInterval) {
+        clearInterval(behaviorUpdateInterval);
+        behaviorUpdateInterval = null;
+    }
+}
 
 // Load and display data
 async function loadData() {
@@ -62,10 +89,164 @@ async function loadData() {
     }
 }
 
+// Load behavior tracking stats (FIXED VERSION)
+function loadBehaviorStats() {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (!tabs[0]) return;
+        
+        const currentUrl = tabs[0].url;
+        const hostname = new URL(currentUrl).hostname;
+        
+        // Update current URL display
+        document.getElementById('currentUrl').textContent = hostname;
+        
+        // Handle per-site session time
+        if (currentTabUrl !== currentUrl) {
+            currentTabUrl = currentUrl;
+            currentTabStartTime = Date.now();
+        }
+        
+        // Calculate and display per-site session time
+        if (currentTabStartTime) {
+            const sessionSeconds = Math.floor((Date.now() - currentTabStartTime) / 1000);
+            document.getElementById('sessionTime').textContent = formatTimeDetailed(sessionSeconds);
+        } else {
+            document.getElementById('sessionTime').textContent = '0s';
+        }
+        
+        // Load global tab switches
+        chrome.storage.local.get(['sessionData'], (result) => {
+            const sessionData = result.sessionData || {};
+            document.getElementById('tabSwitches').textContent = sessionData.tabSwitchCount || 0;
+        });
+        
+        // Load behavior data for current site - FIXED LOGIC
+        chrome.storage.local.get(['behaviorData'], (result) => {
+            const behaviorData = result.behaviorData || {};
+            const siteData = behaviorData[hostname] || [];
+            
+            if (siteData.length > 0) {
+                // Get the most recent session data
+                const latestSession = siteData[siteData.length - 1];
+                const now = Date.now();
+                
+                // Check if this session is still active (within 30 seconds of last update)
+                const timeSinceUpdate = now - (latestSession.lastUpdated ? new Date(latestSession.lastUpdated).getTime() : latestSession.pageLoadTime);
+                
+                if (timeSinceUpdate < 30000) { // 30 seconds
+                    document.getElementById('pageClicks').textContent = latestSession.clicks || 0;
+                    document.getElementById('pageScrolls').textContent = latestSession.scrolls || 0;
+                    document.getElementById('mouseMovements').textContent = latestSession.mouseMovements || 0;
+                } else {
+                    // Session is stale, show 0
+                    document.getElementById('pageClicks').textContent = '0';
+                    document.getElementById('pageScrolls').textContent = '0';
+                    document.getElementById('mouseMovements').textContent = '0';
+                }
+            } else {
+                // No data for this site
+                document.getElementById('pageClicks').textContent = '0';
+                document.getElementById('pageScrolls').textContent = '0';
+                document.getElementById('mouseMovements').textContent = '0';
+            }
+        });
+    });
+}
+
 // Format time in minutes
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     return `${minutes}m`;
+}
+
+// Format time with detailed breakdown (for behavior tracking)
+function formatTimeDetailed(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    
+    if (hours > 0) {
+        return `${hours}h ${minutes}m ${secs}s`;
+    } else if (minutes > 0) {
+        return `${minutes}m ${secs}s`;
+    } else {
+        return `${secs}s`;
+    }
+}
+
+
+// Export behavior data function (IMPROVED VERSION)
+function exportBehaviorData() {
+    // Get all data from storage first
+    chrome.storage.local.get(null, (data) => {
+        const exportData = {
+            sessionData: data.sessionData || {},
+            visitFrequency: data.visitFrequency || {},
+            behaviorData: data.behaviorData || {},
+            todayStats: data.todayStats || {},
+            urlTimeSpent: data.urlTimeSpent || {},
+            distractionUrls: data.distractionUrls || [],
+            productiveUrls: data.productiveUrls || [],
+            rewardPoints: data.rewardPoints || 0,
+            exportTime: new Date().toISOString(),
+            exportedFrom: 'ProductivityGuard'
+        };
+        
+        // Create and download the file directly from popup
+        const jsonString = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        // Create download link
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `productivity_guard_data_${Date.now()}.json`;
+        link.style.display = 'none';
+        
+        // Add to page, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up URL object
+        URL.revokeObjectURL(url);
+        
+        // Show success message
+        const btn = document.getElementById('exportBtn');
+        const originalText = btn.textContent;
+        btn.textContent = 'Data Exported!';
+        btn.style.background = '#34a853';
+        
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
+    });
+}
+
+
+// Clear behavior data function
+function clearBehaviorData() {
+    if (confirm('Are you sure you want to clear all tracked behavior data?')) {
+        // Clear specific behavior data, not all storage
+        chrome.storage.local.remove(['behaviorData', 'sessionData'], () => {
+            // Reset current tab tracking
+            currentTabStartTime = Date.now();
+            currentTabUrl = null;
+            
+            // Show success message
+            const btn = document.getElementById('clearBtn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Data Cleared!';
+            btn.style.background = '#ea4335';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                loadBehaviorStats(); // Reload behavior stats
+            }, 2000);
+        });
+    }
 }
 
 // Display URL list
@@ -247,6 +428,19 @@ async function sendToBackend(endpoint, data) {
 // Initialize popup
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
+    loadBehaviorStats(); // Load behavior stats on popup open
+    
+    // Add event listeners for behavior tracking buttons
+    const exportBtn = document.getElementById('exportBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportBehaviorData);
+    }
+    
+    if (clearBtn) {
+        clearBtn.addEventListener('click', clearBehaviorData);
+    }
     
     // Load settings
     chrome.storage.local.get([
@@ -270,5 +464,18 @@ document.addEventListener('DOMContentLoaded', () => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'updateStats') {
         loadData();
+        loadBehaviorStats();
     }
+    
+    // Listen for behavior data updates - CRITICAL FOR REAL-TIME UPDATES
+    if (message.type === 'UPDATE_BEHAVIOR_DATA') {
+        loadBehaviorStats();
+    }
+    
+    sendResponse({ success: true });
+});
+
+// Clean up interval when popup is closed
+window.addEventListener('beforeunload', () => {
+    stopBehaviorStatsUpdate();
 });

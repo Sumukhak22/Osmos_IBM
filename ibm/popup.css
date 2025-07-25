@@ -211,3 +211,72 @@ label input[type="checkbox"] {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+
+/* User Behavior Tracker specific styles */
+.behavior-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 8px;
+}
+
+.stat:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 14px;
+    color: #666;
+    font-weight: 400;
+}
+
+.behavior-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#exportBtn,
+#clearBtn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+#exportBtn {
+    background: #667eea;
+    color: white;
+}
+
+#exportBtn:hover {
+    background: #5a67d8;
+}
+
+#clearBtn {
+    background: #e53e3e;
+    color: white;
+}
+
+#clearBtn:hover {
+    background: #c53030;
+}

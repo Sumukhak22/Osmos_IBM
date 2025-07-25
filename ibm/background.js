@@ -10,6 +10,11 @@ let userInteractionData = {
     scrolls: 0
 };
 
+// Enhanced session tracking data
+let sessionData = {};
+let tabSwitchCount = 0;
+let sessionGlobalStartTime = Date.now();
+
 // Initialize extension
 chrome.runtime.onStartup.addListener(initializeExtension);
 chrome.runtime.onInstalled.addListener(initializeExtension);
@@ -19,6 +24,10 @@ async function initializeExtension() {
     
     // Reset daily stats if it's a new day
     await resetDailyStatsIfNeeded();
+    
+    // Initialize enhanced session tracking
+    sessionGlobalStartTime = Date.now();
+    tabSwitchCount = 0;
     
     // Start tracking
     startTracking();
@@ -32,12 +41,18 @@ async function initializeExtension() {
 
 // Tab change listeners
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
+    tabSwitchCount++;
+    updateSessionData();
     await handleTabChange(activeInfo.tabId);
 });
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (changeInfo.status === 'complete' && tab.active) {
         await handleTabChange(tabId);
+        // Update visit frequency
+        if (tab.url) {
+            updateVisitFrequency(tab.url);
+        }
     }
 });
 
@@ -63,6 +78,37 @@ async function handleTabChange(tabId) {
         
         // Check if this URL needs monitoring
         await checkUrlLimits(tab.url);
+    }
+}
+
+// Enhanced session data update
+function updateSessionData() {
+    const currentTime = Date.now();
+    const sessionTime = Math.floor((currentTime - sessionGlobalStartTime) / 1000); // in seconds
+    
+    sessionData = {
+        sessionTime: sessionTime,
+        tabSwitchCount: tabSwitchCount,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Store in chrome storage
+    chrome.storage.local.set({ sessionData: sessionData });
+}
+
+// Enhanced visit frequency tracking
+function updateVisitFrequency(url) {
+    try {
+        const domain = new URL(url).hostname;
+        
+        chrome.storage.local.get(['visitFrequency'], (result) => {
+            const visitFrequency = result.visitFrequency || {};
+            visitFrequency[domain] = (visitFrequency[domain] || 0) + 1;
+            
+            chrome.storage.local.set({ visitFrequency: visitFrequency });
+        });
+    } catch (error) {
+        console.error('Error updating visit frequency:', error);
     }
 }
 
@@ -235,6 +281,29 @@ async function sendUsageDataToBackend(data) {
     }
 }
 
+// Enhanced export functionality
+function exportAllData() {
+    chrome.storage.local.get(null, (data) => {
+        const exportData = {
+            sessionData: data.sessionData || {},
+            visitFrequency: data.visitFrequency || {},
+            behaviorData: data.behaviorData || {},
+            todayStats: data.todayStats || {},
+            urlTimeSpent: data.urlTimeSpent || {},
+            exportTime: new Date().toISOString()
+        };
+        
+        const jsonString = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        chrome.downloads.download({
+            url: url,
+            filename: `user_behavior_data_${Date.now()}.json`
+        });
+    });
+}
+
 // Message handling
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.action) {
@@ -252,6 +321,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         case 'answerQuestion':
             handleQuestionAnswer(message.answer, message.domain);
             break;
+    }
+    
+    // Handle enhanced behavior tracking messages
+    if (message.type === 'UPDATE_BEHAVIOR_DATA') {
+        updateSessionData();
+        sendResponse({ success: true });
+    }
+    
+    if (message.type === 'EXPORT_DATA') {
+        exportAllData();
+        sendResponse({ success: true });
     }
     
     sendResponse({ success: true });
@@ -320,6 +400,9 @@ function startTracking() {
         }
     }, 30000);
 }
+
+// Update session data every minute
+setInterval(updateSessionData, 60000);
 
 // Utility functions
 function extractDomain(url) {
