@@ -214,7 +214,7 @@ class UserDataProcessor:
         # Excessive tab switching
         tab_switch_rate = features.get('tab_switch_rate', 0)
         historical_tab_rates = [self.extract_behavioral_features(h['session_data']).get('tab_switch_rate', 0) 
-                                for h in historical_data[-10:]]  # Last 10 sessions
+                               for h in historical_data[-10:]]  # Last 10 sessions
         baseline_tab_rate = np.mean(historical_tab_rates) if historical_tab_rates else 5
         
         stress_scores['excessive_tab_switching'] = min(1.0, max(0, 
@@ -237,7 +237,7 @@ class UserDataProcessor:
         # Decreased productivity
         current_productivity = features.get('productivity_ratio', 0)
         historical_productivity = [self.extract_behavioral_features(h['session_data']).get('productivity_ratio', 0) 
-                                   for h in historical_data[-10:]]
+                                  for h in historical_data[-10:]]
         baseline_productivity = np.mean(historical_productivity) if historical_productivity else 0.3
         
         productivity_decline = max(0, (baseline_productivity - current_productivity) / max(baseline_productivity, 0.1))
@@ -413,7 +413,7 @@ You have access to the following tools:
 
 Based on research in digital wellness and mental health:
 - Excessive tab switching (>50 per hour) indicates anxiety or difficulty focusing
-- Late-night Browse (after 11 PM) suggests sleep disruption
+- Late-night browsing (after 11 PM) suggests sleep disruption
 - Repetitive site checking (>70% of visits to same sites) shows compulsive behavior
 - Decreased productivity coupled with increased activity indicates stress
 - Very short intense sessions suggest restlessness or agitation
@@ -432,18 +432,23 @@ When someone provides session data:
 Follow this format:
 Question: input question to answer
 Thought: consider previous and subsequent steps
-Action:{{{{
-"action": $TOOL_NAME,
-"action_input": $INPUT
+Action:
+```
+{{{{
+  "action": $TOOL_NAME,
+  "action_input": $INPUT
 }}}}
-
+```
 Observation: action result
 Thought: I know what to respond
 Action:
+```
 {{{{
-"action": "Final Answer",
-"action_input": "Final response to human"
+  "action": "Final Answer",
+  "action_input": "Final response to human"
 }}}}
+```
+
 Begin! Reminder to ALWAYS respond with a valid json blob of a single action.
 <|end_of_text|>"""
 
@@ -642,111 +647,165 @@ def analyze_with_llm_agent(session_data_json: str) -> Dict:
             'error': str(e),
             'intervention_required': False
         }
-
-# Helper function to transform new data format to the one expected by the analyzer
-def transform_and_aggregate_data(raw_behavior_data: list) -> dict:
-    """
-    Transforms raw behavior data (list of domain interactions) from 
-    latest_behavior_upload.json into the session format expected by the analyzer.
-    It processes the first 6 entries from the behavior list.
-    """
-    # Use only the first 6 entries as requested
-    behavior_slice = raw_behavior_data[:6]
-
-    # Initialize the structure for the final formatted data
-    formatted_data = {
-        "sessionData": {},
-        "visitFrequency": {},
-        "behaviorData": {},
-        "urlTimeSpent": {},
-        "distractionUrls": [],
-        "productiveUrls": [],
-        "rewardPoints": 0,
-        "exportedFrom": "ProductivityGuard_Aggregator"
-    }
-
-    total_session_time_ms = 0
-    latest_timestamp = "1970-01-01T00:00:00.000Z"
-
-    # Aggregate data from the slice
-    for entry in behavior_slice:
-        domain = entry.get("domain")
-        if not domain:
-            continue
-
-        # Aggregate for visitFrequency (counting occurrences of each domain in the slice)
-        formatted_data["visitFrequency"][domain] = formatted_data["visitFrequency"].get(domain, 0) + 1
-        
-        # Structure the behaviorData
-        if domain not in formatted_data["behaviorData"]:
-            formatted_data["behaviorData"][domain] = []
-        
-        behavior_entry = entry.copy()
-        if 'domain' in behavior_entry:
-            del behavior_entry['domain']
-        formatted_data["behaviorData"][domain].append(behavior_entry)
-        
-        # Aggregate for urlTimeSpent (converting ms to seconds)
-        duration_ms = entry.get("sessionDuration", 0)
-        formatted_data["urlTimeSpent"][domain] = formatted_data["urlTimeSpent"].get(domain, 0) + (duration_ms / 1000)
-        
-        total_session_time_ms += duration_ms
-
-        if entry.get("lastUpdated") and entry.get("lastUpdated") > latest_timestamp:
-            latest_timestamp = entry["lastUpdated"]
-
-    # Populate the main sessionData object
-    formatted_data["sessionData"] = {
-        "sessionTime": total_session_time_ms / 1000,  # Convert total time to seconds
-        "tabSwitchCount": len(behavior_slice),  # Using the number of domain interactions as a proxy
-        "timestamp": latest_timestamp
-    }
-    
-    # Add other fields for compatibility
-    formatted_data["todayStats"] = {
-        "activeTime": total_session_time_ms / 1000,
-        "distractionTime": 0,
-        "productiveTime": 0
-    }
-    formatted_data["exportTime"] = latest_timestamp
-
-    return formatted_data
-
-
 if __name__ == "__main__":
-    try:
-        # Load data from the specified JSON file
-        with open('latest_behavior_upload.json', 'r') as f:
-            raw_data = json.load(f)
-        
-        behavior_list = raw_data.get("behavior", [])
-        
-        if not behavior_list:
-            print("No behavior data found in 'latest_behavior_upload.json'.")
-        else:
-            # Transform the first 6 domains' data into the required format
-            transformed_data = transform_and_aggregate_data(behavior_list)
-            
-            # Convert the Python dictionary to a JSON string to pass to the analysis function
-            session_data_json = json.dumps(transformed_data)
-            
-            print("Analyzing user session from 'latest_behavior_upload.json'...")
-            result = analyze_user_mental_health(session_data_json)
+    # Test with the provided sample data
+    sample_data = """{
+  "sessionData": {
+    "sessionTime": 241,
+    "tabSwitchCount": 35,
+    "timestamp": "2025-07-26T05:52:42.316Z"
+  },
+  "visitFrequency": {
+    "bnmit-students.contineo.in": 1,
+    "claude.ai": 3,
+    "downloads": 1,
+    "eu-north-1.console.aws.amazon.com": 7,
+    "extensions": 1,
+    "github.com": 23,
+    "localhost": 5,
+    "mail.google.com": 3,
+    "monkeytype.com": 3,
+    "newtab": 34,
+    "supabase.com": 4,
+    "us-east-2.signin.aws.amazon.com": 1,
+    "vtu.internyet.in": 4,
+    "www.boot.dev": 1,
+    "www.dehashed.com": 1,
+    "www.facebook.com": 1,
+    "www.google.com": 6,
+    "www.ibm.com": 1,
+    "www.indiabix.com": 3,
+    "www.instagram.com": 30,
+    "www.nature.com": 1,
+    "www.perplexity.ai": 6,
+    "www.tribuneindia.com": 1,
+    "www.youtube.com": 11
+  },
+  "behaviorData": {
+    "www.google.com": [
+      {
+        "clicks": 1,
+        "keystrokes": 0,
+        "lastUpdated": "2025-07-26T05:49:15.284Z",
+        "mouseMovements": 0,
+        "pageLoadTime": 1753508953002,
+        "scrolls": 0,
+        "sessionDuration": 2282,
+        "timeOfDay": "2025-07-26T05:49:13.001Z",
+        "typingSpeed": {
+          "sessions": [],
+          "totalKeys": 0,
+          "totalTime": 0
+        },
+        "url": "https://www.google.com/search?q=negative+news&oq=&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MhUIARAAGEYY-QEYkQIYsQMYgAQYigUyBggCEEUYOzIMCAMQABhDGIAEGIoFMgwIBBAAGEMYgAQYigUyDAgFEAAYQxiABBiKBTIMCAYQABhDGIAEGIoFMgwIBxAAGEMYgAQYigUyCggIEAAYsQMYgAQyDAgJEAAYQxiABBiKBdIBCDI3OTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
+      },
+      {
+        "clicks": 1,
+        "keystrokes": 0,
+        "lastUpdated": "2025-07-26T05:49:19.614Z",
+        "mouseMovements": 0,
+        "pageLoadTime": 1753508955323,
+        "scrolls": 11,
+        "sessionDuration": 4291,
+        "timeOfDay": "2025-07-26T05:49:15.323Z",
+        "typingSpeed": {
+          "sessions": [],
+          "totalKeys": 0,
+          "totalTime": 0
+        },
+        "url": "https://www.google.com/search?sca_esv=4f09092a201a8ac4&sxsrf=AE3TifMrZ7lCxb9zN1twZKarg8TZ_rjP2A:1753508953382&q=negative+news&tbm=nws&source=lnms&fbs=AIIjpHxU7SXXniUZfeShr2fp4giZrjP_Cx0LI1Ytb_FGcOviEiTm5uW1q0uNfK7KsnoL8hUyUYUJLZ_b-p0lT09DIkR7RtNt-9R1f9Pbq4mdMMyxSelEHHADgzBCNx7-1ORi0KL6PmuZlhCdFkfC14rwu1hVYz7VaOyiNZ1fR3MRh37FnT1xKvvetQpGv6CeYusk3UW5R7062AE1WaM4vJA2CkZ6VOjUqg&sa=X&sqi=2&ved=2ahUKEwjalZvy6dmOAxX1xzgGHQGfFqAQ0pQJKAF6BAgSEAE&biw=1422&bih=753&dpr=1.8"
+      }
+    ],
+    "www.instagram.com": [
+      {
+        "clicks": 18,
+        "keystrokes": 0,
+        "lastUpdated": "2025-07-26T05:52:32.102Z",
+        "mouseMovements": 0,
+        "pageLoadTime": 1753508926877,
+        "scrolls": 959,
+        "sessionDuration": 225225,
+        "timeOfDay": "2025-07-26T05:51:54.743Z",
+        "typingSpeed": {
+          "sessions": [],
+          "totalKeys": 0,
+          "totalTime": 0
+        },
+        "url": "https://www.instagram.com/"
+      }
+    ],
+    "www.nature.com": [
+      {
+        "clicks": 5,
+        "keystrokes": 0,
+        "lastUpdated": "2025-07-26T05:52:42.308Z",
+        "mouseMovements": 0,
+        "pageLoadTime": 1753508961832,
+        "scrolls": 427,
+        "sessionDuration": 200476,
+        "timeOfDay": "2025-07-26T05:52:34.537Z",
+        "typingSpeed": {
+          "sessions": [],
+          "totalKeys": 0,
+          "totalTime": 0
+        },
+        "url": "https://www.nature.com/articles/s41598-025-10810-8"
+      }
+    ],
+    "www.youtube.com": [
+      {
+        "clicks": 2,
+        "keystrokes": 0,
+        "lastUpdated": "2025-07-26T05:52:34.557Z",
+        "mouseMovements": 0,
+        "pageLoadTime": 1753508929249,
+        "scrolls": 314,
+        "sessionDuration": 225308,
+        "timeOfDay": "2025-07-26T05:52:32.107Z",
+        "typingSpeed": {
+          "sessions": [],
+          "totalKeys": 0,
+          "totalTime": 0
+        },
+        "url": "https://www.youtube.com/"
+      }
+    ]
+  },
+  "todayStats": {
+    "activeTime": 5290,
+    "distractionTime": 0,
+    "productiveTime": 0
+  },
+  "urlTimeSpent": {
+    "claude.ai": 663,
+    "eu-north-1.console.aws.amazon.com": 298,
+    "github.com": 843,
+    "localhost": 10,
+    "mail.google.com": 56,
+    "newtab": 266,
+    "supabase.com": 10,
+    "us-east-2.signin.aws.amazon.com": 17,
+    "vtu.internyet.in": 24,
+    "www.google.com": 73,
+    "www.ibm.com": 68,
+    "www.indiabix.com": 33,
+    "www.instagram.com": 1031,
+    "www.nature.com": 150,
+    "www.perplexity.ai": 768,
+    "www.tribuneindia.com": 68,
+    "www.youtube.com": 912
+  },
+  "distractionUrls": [],
+  "productiveUrls": [],
+  "rewardPoints": 0,
+  "exportTime": "2025-07-26T05:52:46.769Z",
+  "exportedFrom": "ProductivityGuard"
+}"""
+    
+    print("Analyzing sample user session...")
+    result = analyze_user_mental_health(sample_data)
 
-            # Print the final analysis result
-            print(json.dumps(result, indent=2))
-            
-            # Check and report the intervention status
-            if 'intervention_required' in result:
-                print(f"\nIntervention required: {result['intervention_required']}")
-                if not result['intervention_required']:
-                    print("No intervention needed. User's digital habits appear healthy.")
-            else:
-                 print("\nAnalysis result does not contain 'intervention_required' key.")
-
-    except FileNotFoundError:
-        print("Error: 'latest_behavior_upload.json' not found. Please ensure the file is in the same directory as brain.py.")
-    except json.JSONDecodeError:
-        print("Error: Could not decode JSON from 'latest_behavior_upload.json'. Please check the file's format.")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+    print(json.dumps(result, indent=2))
+    print([result['intervention_required']])
+    if result['intervention_required'] == False:
+        print("No intervention needed. User's digital habits are healthy.")

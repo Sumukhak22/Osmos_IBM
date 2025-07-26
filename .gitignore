@@ -1,3 +1,7 @@
 /idk
 /ignore_this_file.txt
 /user_behavior_history.db
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class

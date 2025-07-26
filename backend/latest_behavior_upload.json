@@ -1,15 +1,228 @@
 {
   "behavior": [
     {
-      "domain": "github.com",
-      "clicks": 6,
+      "domain": "www.instagram.com",
+      "clicks": 36,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T08:07:14.193Z",
+      "lastUpdated": "2025-07-26T09:17:18.512Z",
       "mouseMovements": 0,
-      "pageLoadTime": 1753512172466,
-      "scrolls": 49,
-      "sessionDuration": 5061727,
-      "timeOfDay": "2025-07-26T08:07:04.417Z",
+      "pageLoadTime": 1753521288168,
+      "scrolls": 443,
+      "sessionDuration": 150344,
+      "timeOfDay": "2025-07-26T09:16:52.997Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.instagram.com/"
+    },
+    {
+      "domain": "www.youtube.com",
+      "clicks": 2,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T09:16:51.761Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753521290963,
+      "scrolls": 88,
+      "sessionDuration": 120798,
+      "timeOfDay": "2025-07-26T09:15:25.927Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.youtube.com/"
+    },
+    {
+      "domain": "www.python.org",
+      "clicks": 1,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T09:16:33.272Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753521393170,
+      "scrolls": 0,
+      "sessionDuration": 102,
+      "timeOfDay": "2025-07-26T09:16:33.169Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.python.org/downloads/release/python-3124/"
+    },
+    {
+      "domain": "claude.ai",
+      "clicks": 76,
+      "keystrokes": 997,
+      "lastUpdated": "2025-07-26T09:16:33.217Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753519224426,
+      "scrolls": 2228,
+      "sessionDuration": 2168791,
+      "timeOfDay": "2025-07-26T09:16:32.358Z",
+      "typingSpeed": {
+        "sessions": [
+          {
+            "duration": 3.412,
+            "keyCount": 23,
+            "timestamp": "2025-07-26T08:40:31.715Z",
+            "wpm": 81
+          },
+          {
+            "duration": 13.847,
+            "keyCount": 68,
+            "timestamp": "2025-07-26T08:40:49.760Z",
+            "wpm": 59
+          },
+          {
+            "duration": 13.279,
+            "keyCount": 55,
+            "timestamp": "2025-07-26T08:41:13.476Z",
+            "wpm": 50
+          },
+          {
+            "duration": 4.682,
+            "keyCount": 29,
+            "timestamp": "2025-07-26T08:42:15.754Z",
+            "wpm": 74
+          },
+          {
+            "duration": 7.438,
+            "keyCount": 50,
+            "timestamp": "2025-07-26T08:42:30.758Z",
+            "wpm": 81
+          },
+          {
+            "duration": 17.878,
+            "keyCount": 140,
+            "timestamp": "2025-07-26T08:43:04.753Z",
+            "wpm": 94
+          },
+          {
+            "duration": 6.599,
+            "keyCount": 34,
+            "timestamp": "2025-07-26T08:43:18.559Z",
+            "wpm": 62
+          },
+          {
+            "duration": 6.32,
+            "keyCount": 49,
+            "timestamp": "2025-07-26T08:43:28.755Z",
+            "wpm": 93
+          },
+          {
+            "duration": 5.213,
+            "keyCount": 36,
+            "timestamp": "2025-07-26T08:44:06.905Z",
+            "wpm": 83
+          },
+          {
+            "duration": 2.734,
+            "keyCount": 15,
+            "timestamp": "2025-07-26T08:50:14.397Z",
+            "wpm": 66
+          },
+          {
+            "duration": 4.975,
+            "keyCount": 35,
+            "timestamp": "2025-07-26T08:50:30.587Z",
+            "wpm": 84
+          },
+          {
+            "duration": 3.099,
+            "keyCount": 17,
+            "timestamp": "2025-07-26T08:50:36.339Z",
+            "wpm": 66
+          },
+          {
+            "duration": 4.768,
+            "keyCount": 13,
+            "timestamp": "2025-07-26T08:50:46.293Z",
+            "wpm": 33
+          },
+          {
+            "duration": 3.324,
+            "keyCount": 21,
+            "timestamp": "2025-07-26T08:53:19.666Z",
+            "wpm": 76
+          },
+          {
+            "duration": 5.518,
+            "keyCount": 14,
+            "timestamp": "2025-07-26T08:53:27.551Z",
+            "wpm": 30
+          },
+          {
+            "duration": 3.573,
+            "keyCount": 25,
+            "timestamp": "2025-07-26T08:54:43.364Z",
+            "wpm": 84
+          },
+          {
+            "duration": 12.505,
+            "keyCount": 69,
+            "timestamp": "2025-07-26T08:56:27.764Z",
+            "wpm": 66
+          },
+          {
+            "duration": 5.11,
+            "keyCount": 32,
+            "timestamp": "2025-07-26T09:01:06.763Z",
+            "wpm": 75
+          },
+          {
+            "duration": 13.882,
+            "keyCount": 74,
+            "timestamp": "2025-07-26T09:01:36.763Z",
+            "wpm": 64
+          },
+          {
+            "duration": 4.637,
+            "keyCount": 35,
+            "timestamp": "2025-07-26T09:02:05.924Z",
+            "wpm": 91
+          },
+          {
+            "duration": 11.394,
+            "keyCount": 58,
+            "timestamp": "2025-07-26T09:02:35.817Z",
+            "wpm": 61
+          },
+          {
+            "duration": 3.783,
+            "keyCount": 25,
+            "timestamp": "2025-07-26T09:02:44.152Z",
+            "wpm": 79
+          },
+          {
+            "duration": 6.922,
+            "keyCount": 42,
+            "timestamp": "2025-07-26T09:02:53.764Z",
+            "wpm": 73
+          },
+          {
+            "duration": 2.765,
+            "keyCount": 23,
+            "timestamp": "2025-07-26T09:03:04.346Z",
+            "wpm": 100
+          }
+        ],
+        "totalKeys": 982,
+        "totalTime": 167.65699999999995
+      },
+      "url": "https://claude.ai/new"
+    },
+    {
+      "domain": "github.com",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T09:16:33.056Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753521390332,
+      "scrolls": 0,
+      "sessionDuration": 2724,
+      "timeOfDay": "2025-07-26T09:16:30.331Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
@@ -18,21 +231,233 @@
       "url": "https://github.com/"
     },
     {
-      "domain": "www.canva.com",
-      "clicks": 6,
+      "domain": "quickref.me",
+      "clicks": 17,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T08:06:31.771Z",
+      "lastUpdated": "2025-07-26T09:16:33.014Z",
       "mouseMovements": 0,
-      "pageLoadTime": 1753512702938,
-      "scrolls": 155,
-      "sessionDuration": 4488833,
-      "timeOfDay": "2025-07-26T08:04:38.466Z",
+      "pageLoadTime": 1753519123008,
+      "scrolls": 258,
+      "sessionDuration": 2270006,
+      "timeOfDay": "2025-07-26T09:16:31.972Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://quickref.me/"
+    },
+    {
+      "domain": "www.canva.com",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T09:16:32.970Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753521391547,
+      "scrolls": 0,
+      "sessionDuration": 1423,
+      "timeOfDay": "2025-07-26T09:16:31.547Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
         "totalTime": 0
       },
       "url": "https://www.canva.com/"
+    },
+    {
+      "domain": "www.perplexity.ai",
+      "clicks": 10,
+      "keystrokes": 373,
+      "lastUpdated": "2025-07-26T09:16:31.757Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753520960436,
+      "scrolls": 586,
+      "sessionDuration": 431321,
+      "timeOfDay": "2025-07-26T09:14:21.159Z",
+      "typingSpeed": {
+        "sessions": [
+          {
+            "duration": 8.881,
+            "keyCount": 48,
+            "timestamp": "2025-07-26T09:09:34.754Z",
+            "wpm": 65
+          },
+          {
+            "duration": 25.957,
+            "keyCount": 139,
+            "timestamp": "2025-07-26T09:10:08.764Z",
+            "wpm": 64
+          },
+          {
+            "duration": 15.898,
+            "keyCount": 113,
+            "timestamp": "2025-07-26T09:10:28.534Z",
+            "wpm": 85
+          },
+          {
+            "duration": 14.385,
+            "keyCount": 71,
+            "timestamp": "2025-07-26T09:12:14.764Z",
+            "wpm": 59
+          }
+        ],
+        "totalKeys": 371,
+        "totalTime": 65.12100000000001
+      },
+      "url": "https://www.perplexity.ai/"
+    },
+    {
+      "domain": "www.canva.com",
+      "clicks": 10,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T09:14:31.760Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753512702938,
+      "scrolls": 250,
+      "sessionDuration": 8568822,
+      "timeOfDay": "2025-07-26T08:49:12.411Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.canva.com/"
+    },
+    {
+      "domain": "www.python.org",
+      "clicks": 12,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T09:10:31.763Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517643687,
+      "scrolls": 234,
+      "sessionDuration": 3388076,
+      "timeOfDay": "2025-07-26T08:47:58.014Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.python.org/downloads/release/python-3124/"
+    },
+    {
+      "domain": "github.com",
+      "clicks": 6,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T09:09:31.750Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753512172466,
+      "scrolls": 49,
+      "sessionDuration": 8799284,
+      "timeOfDay": "2025-07-26T08:47:58.421Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://github.com/"
+    },
+    {
+      "domain": "claude.ai",
+      "clicks": 1,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:40:23.816Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753519193814,
+      "scrolls": 0,
+      "sessionDuration": 30002,
+      "timeOfDay": "2025-07-26T08:39:53.814Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://claude.ai/"
+    },
+    {
+      "domain": "www.perplexity.ai",
+      "clicks": 2,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:15:51.950Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517742264,
+      "scrolls": 34,
+      "sessionDuration": 9686,
+      "timeOfDay": "2025-07-26T08:15:43.027Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.perplexity.ai/"
+    },
+    {
+      "domain": "www.perplexity.ai",
+      "clicks": 4,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:15:39.398Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517689748,
+      "scrolls": 137,
+      "sessionDuration": 49650,
+      "timeOfDay": "2025-07-26T08:14:50.600Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.perplexity.ai/"
+    },
+    {
+      "domain": "www.google.com",
+      "clicks": 1,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:14:03.635Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517637726,
+      "scrolls": 0,
+      "sessionDuration": 5909,
+      "timeOfDay": "2025-07-26T08:13:59.547Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.google.com/search?q=python+3.12.4+download&oq=python+3.12.4&gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBggBEEUYOTIHCAIQABiABDIICAMQABgWGB4yCAgEEAAYFhgeMggIBRAAGBYYHjIICAYQABgWGB4yCAgHEAAYFhgeMggICBAAGBYYHjIKCAkQABgKGBYYHqgCALACAA&sourceid=chrome&ie=UTF-8"
+    },
+    {
+      "domain": "www.google.com",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:13:54.955Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517634955,
+      "scrolls": 0,
+      "sessionDuration": 0,
+      "timeOfDay": "2025-07-26T08:13:54.955Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.google.com/search?q=python+3.12&oq=python+3.12&gs_lcrp=EgZjaHJvbWUyDAgAEEUYORixAxiABDINCAEQABiDARixAxiABDIHCAIQABiABDIHCAMQABiABDIHCAQQABiABDIHCAUQABiABDIHCAYQABiABDIHCAcQABiABDIHCAgQABiABDIHCAkQABiABKgCALACAA&sourceid=chrome&ie=UTF-8"
+    },
+    {
+      "domain": "www.perplexity.ai",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:13:48.956Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517628956,
+      "scrolls": 0,
+      "sessionDuration": 0,
+      "timeOfDay": "2025-07-26T08:13:48.955Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.perplexity.ai/"
     },
     {
       "domain": "localhost",
@@ -84,299 +509,7 @@
         "totalTime": 0
       },
       "url": "https://www.youtube.com/"
-    },
-    {
-      "domain": "chatgpt.com",
-      "clicks": 108,
-      "keystrokes": 1303,
-      "lastUpdated": "2025-07-26T06:41:31.754Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753509728877,
-      "scrolls": 2980,
-      "sessionDuration": 2362877,
-      "timeOfDay": "2025-07-26T06:39:55.041Z",
-      "typingSpeed": {
-        "sessions": [
-          {
-            "duration": 31.284,
-            "keyCount": 122,
-            "timestamp": "2025-07-26T06:02:43.317Z",
-            "wpm": 47
-          },
-          {
-            "duration": 6.362,
-            "keyCount": 37,
-            "timestamp": "2025-07-26T06:03:00.680Z",
-            "wpm": 70
-          },
-          {
-            "duration": 1.703,
-            "keyCount": 8,
-            "timestamp": "2025-07-26T06:03:15.772Z",
-            "wpm": 56
-          },
-          {
-            "duration": 2.657,
-            "keyCount": 20,
-            "timestamp": "2025-07-26T06:03:34.769Z",
-            "wpm": 90
-          },
-          {
-            "duration": 2.136,
-            "keyCount": 13,
-            "timestamp": "2025-07-26T06:05:27.308Z",
-            "wpm": 73
-          },
-          {
-            "duration": 5.806,
-            "keyCount": 23,
-            "timestamp": "2025-07-26T06:06:01.619Z",
-            "wpm": 48
-          },
-          {
-            "duration": 7.862,
-            "keyCount": 53,
-            "timestamp": "2025-07-26T06:06:18.830Z",
-            "wpm": 81
-          },
-          {
-            "duration": 5.843,
-            "keyCount": 36,
-            "timestamp": "2025-07-26T06:06:28.660Z",
-            "wpm": 74
-          },
-          {
-            "duration": 166.041,
-            "keyCount": 9,
-            "timestamp": "2025-07-26T06:09:39.010Z",
-            "wpm": 1
-          },
-          {
-            "duration": 2.064,
-            "keyCount": 18,
-            "timestamp": "2025-07-26T06:09:46.687Z",
-            "wpm": 105
-          },
-          {
-            "duration": 13.889,
-            "keyCount": 58,
-            "timestamp": "2025-07-26T06:10:04.159Z",
-            "wpm": 50
-          },
-          {
-            "duration": 2.335,
-            "keyCount": 17,
-            "timestamp": "2025-07-26T06:10:59.752Z",
-            "wpm": 87
-          },
-          {
-            "duration": 10.598,
-            "keyCount": 72,
-            "timestamp": "2025-07-26T06:20:03.115Z",
-            "wpm": 82
-          },
-          {
-            "duration": 25.72,
-            "keyCount": 124,
-            "timestamp": "2025-07-26T06:20:44.255Z",
-            "wpm": 58
-          },
-          {
-            "duration": 15.671,
-            "keyCount": 34,
-            "timestamp": "2025-07-26T06:21:04.895Z",
-            "wpm": 26
-          },
-          {
-            "duration": 29.661,
-            "keyCount": 168,
-            "timestamp": "2025-07-26T06:21:55.373Z",
-            "wpm": 68
-          },
-          {
-            "duration": 4.954,
-            "keyCount": 34,
-            "timestamp": "2025-07-26T06:22:04.227Z",
-            "wpm": 82
-          },
-          {
-            "duration": 69.188,
-            "keyCount": 14,
-            "timestamp": "2025-07-26T06:27:51.323Z",
-            "wpm": 2
-          },
-          {
-            "duration": 4.208,
-            "keyCount": 28,
-            "timestamp": "2025-07-26T06:27:59.547Z",
-            "wpm": 80
-          },
-          {
-            "duration": 16.68,
-            "keyCount": 117,
-            "timestamp": "2025-07-26T06:28:19.269Z",
-            "wpm": 84
-          },
-          {
-            "duration": 2.879,
-            "keyCount": 13,
-            "timestamp": "2025-07-26T06:28:24.345Z",
-            "wpm": 54
-          },
-          {
-            "duration": 25.033,
-            "keyCount": 136,
-            "timestamp": "2025-07-26T06:30:41.768Z",
-            "wpm": 65
-          },
-          {
-            "duration": 21.893,
-            "keyCount": 129,
-            "timestamp": "2025-07-26T06:32:43.938Z",
-            "wpm": 71
-          }
-        ],
-        "totalKeys": 1283,
-        "totalTime": 474.4670000000001
-      },
-      "url": "https://chatgpt.com/"
-    },
-    {
-      "domain": "web.archive.org",
-      "clicks": 0,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:38:17.762Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753511777498,
-      "scrolls": 0,
-      "sessionDuration": 120264,
-      "timeOfDay": "2025-07-26T06:36:17.498Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://web.archive.org/"
-    },
-    {
-      "domain": "www.nature.com",
-      "clicks": 6,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:36:15.068Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753508961832,
-      "scrolls": 427,
-      "sessionDuration": 2813236,
-      "timeOfDay": "2025-07-26T06:36:09.864Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://www.nature.com/articles/s41598-025-10810-8"
-    },
-    {
-      "domain": "localhost",
-      "clicks": 0,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:25:01.949Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753511101948,
-      "scrolls": 0,
-      "sessionDuration": 1,
-      "timeOfDay": "2025-07-26T06:25:01.947Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "http://localhost:5000/"
-    },
-    {
-      "domain": "www.instagram.com",
-      "clicks": 18,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:15:47.509Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753508926877,
-      "scrolls": 959,
-      "sessionDuration": 1620632,
-      "timeOfDay": "2025-07-26T06:02:06.286Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://www.instagram.com/"
-    },
-    {
-      "domain": "chatgpt.com",
-      "clicks": 0,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:08:03.478Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753510077176,
-      "scrolls": 0,
-      "sessionDuration": 6302,
-      "timeOfDay": "2025-07-26T06:07:57.176Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://chatgpt.com/"
-    },
-    {
-      "domain": "www.indiabix.com",
-      "clicks": 0,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:08:01.063Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753510081063,
-      "scrolls": 0,
-      "sessionDuration": 0,
-      "timeOfDay": "2025-07-26T06:08:01.063Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://www.indiabix.com/"
-    },
-    {
-      "domain": "www.google.com",
-      "clicks": 1,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T05:49:19.614Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753508955323,
-      "scrolls": 11,
-      "sessionDuration": 4291,
-      "timeOfDay": "2025-07-26T05:49:15.323Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://www.google.com/search?sca_esv=4f09092a201a8ac4&sxsrf=AE3TifMrZ7lCxb9zN1twZKarg8TZ_rjP2A:1753508953382&q=negative+news&tbm=nws&source=lnms&fbs=AIIjpHxU7SXXniUZfeShr2fp4giZrjP_Cx0LI1Ytb_FGcOviEiTm5uW1q0uNfK7KsnoL8hUyUYUJLZ_b-p0lT09DIkR7RtNt-9R1f9Pbq4mdMMyxSelEHHADgzBCNx7-1ORi0KL6PmuZlhCdFkfC14rwu1hVYz7VaOyiNZ1fR3MRh37FnT1xKvvetQpGv6CeYusk3UW5R7062AE1WaM4vJA2CkZ6VOjUqg&sa=X&sqi=2&ved=2ahUKEwjalZvy6dmOAxX1xzgGHQGfFqAQ0pQJKAF6BAgSEAE&biw=1422&bih=753&dpr=1.8"
-    },
-    {
-      "domain": "www.google.com",
-      "clicks": 1,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T05:49:15.284Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753508953002,
-      "scrolls": 0,
-      "sessionDuration": 2282,
-      "timeOfDay": "2025-07-26T05:49:13.001Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://www.google.com/search?q=negative+news&oq=&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MhUIARAAGEYY-QEYkQIYsQMYgAQYigUyBggCEEUYOzIMCAMQABhDGIAEGIoFMgwIBBAAGEMYgAQYigUyDAgFEAAYQxiABBiKBTIMCAYQABhDGIAEGIoFMgwIBxAAGEMYgAQYigUyCggIEAAYsQMYgAQyDAgJEAAYQxiABBiKBdIBCDI3OTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
     }
   ],
-  "uploadedAt": "2025-07-26T08:07:20.763Z"
+  "uploadedAt": "2025-07-26T09:17:18.713Z"
 }
