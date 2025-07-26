@@ -479,3 +479,56 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 window.addEventListener('beforeunload', () => {
     stopBehaviorStatsUpdate();
 });
+
+// Utility: Get latest N entries sorted by 'lastUpdated' across all domains
+function getLatestBehaviorEntries(data, limit = 20) {
+    const allEntries = [];
+
+    for (const [domain, sessions] of Object.entries(data.behaviorData || {})) {
+        sessions.forEach(session => {
+            allEntries.push({ domain, ...session });
+        });
+    }
+
+    // Sort by lastUpdated descending
+    allEntries.sort((a, b) => {
+        const timeA = new Date(a.lastUpdated || a.timeOfDay || 0).getTime();
+        const timeB = new Date(b.lastUpdated || b.timeOfDay || 0).getTime();
+        return timeB - timeA;
+    });
+
+    return allEntries.slice(0, limit);
+}
+
+// Send the filtered data to backend
+async function autoUploadLatestBehavior() {
+    try {
+        const result = await chrome.storage.local.get(['behaviorData']);
+        const latestEntries = getLatestBehaviorEntries(result, 20);
+
+        const response = await fetch('http://localhost:5000/api/behavior-upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ behavior: latestEntries, uploadedAt: new Date().toISOString() })
+        });
+
+        if (!response.ok) {
+            console.error('Auto-upload failed with status:', response.status);
+        } else {
+            console.log('Auto-upload success:', await response.json());
+        }
+    } catch (error) {
+        console.error('Error in auto-upload:', error);
+    }
+}
+
+// Start 1-min interval for uploading data
+function startAutoUploadTimer() {
+    setInterval(autoUploadLatestBehavior, 60000); // every 60 seconds
+}
+
+// Call it on popup open
+document.addEventListener('DOMContentLoaded', () => {
+    // (already existing initialization code above...)
+    startAutoUploadTimer();
+});

@@ -1,0 +1,231 @@
+{
+  "behavior": [
+    {
+      "domain": "www.youtube.com",
+      "clicks": 24,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:19:19.751Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753508929249,
+      "scrolls": 314,
+      "sessionDuration": 1830502,
+      "timeOfDay": "2025-07-26T06:18:27.481Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.youtube.com/"
+    },
+    {
+      "domain": "www.instagram.com",
+      "clicks": 16,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:18:31.758Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753510083013,
+      "scrolls": 162,
+      "sessionDuration": 628745,
+      "timeOfDay": "2025-07-26T06:15:42.783Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.instagram.com/"
+    },
+    {
+      "domain": "chatgpt.com",
+      "clicks": 71,
+      "keystrokes": 425,
+      "lastUpdated": "2025-07-26T06:17:31.764Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753509728877,
+      "scrolls": 1329,
+      "sessionDuration": 922887,
+      "timeOfDay": "2025-07-26T06:12:59.155Z",
+      "typingSpeed": {
+        "sessions": [
+          {
+            "duration": 31.284,
+            "keyCount": 122,
+            "timestamp": "2025-07-26T06:02:43.317Z",
+            "wpm": 47
+          },
+          {
+            "duration": 6.362,
+            "keyCount": 37,
+            "timestamp": "2025-07-26T06:03:00.680Z",
+            "wpm": 70
+          },
+          {
+            "duration": 1.703,
+            "keyCount": 8,
+            "timestamp": "2025-07-26T06:03:15.772Z",
+            "wpm": 56
+          },
+          {
+            "duration": 2.657,
+            "keyCount": 20,
+            "timestamp": "2025-07-26T06:03:34.769Z",
+            "wpm": 90
+          },
+          {
+            "duration": 2.136,
+            "keyCount": 13,
+            "timestamp": "2025-07-26T06:05:27.308Z",
+            "wpm": 73
+          },
+          {
+            "duration": 5.806,
+            "keyCount": 23,
+            "timestamp": "2025-07-26T06:06:01.619Z",
+            "wpm": 48
+          },
+          {
+            "duration": 7.862,
+            "keyCount": 53,
+            "timestamp": "2025-07-26T06:06:18.830Z",
+            "wpm": 81
+          },
+          {
+            "duration": 5.843,
+            "keyCount": 36,
+            "timestamp": "2025-07-26T06:06:28.660Z",
+            "wpm": 74
+          },
+          {
+            "duration": 166.041,
+            "keyCount": 9,
+            "timestamp": "2025-07-26T06:09:39.010Z",
+            "wpm": 1
+          },
+          {
+            "duration": 2.064,
+            "keyCount": 18,
+            "timestamp": "2025-07-26T06:09:46.687Z",
+            "wpm": 105
+          },
+          {
+            "duration": 13.889,
+            "keyCount": 58,
+            "timestamp": "2025-07-26T06:10:04.159Z",
+            "wpm": 50
+          },
+          {
+            "duration": 2.335,
+            "keyCount": 17,
+            "timestamp": "2025-07-26T06:10:59.752Z",
+            "wpm": 87
+          }
+        ],
+        "totalKeys": 414,
+        "totalTime": 247.98200000000003
+      },
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "domain": "www.nature.com",
+      "clicks": 6,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:17:31.762Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753508961832,
+      "scrolls": 427,
+      "sessionDuration": 1689930,
+      "timeOfDay": "2025-07-26T06:07:52.742Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.nature.com/articles/s41598-025-10810-8"
+    },
+    {
+      "domain": "www.instagram.com",
+      "clicks": 18,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:15:47.509Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753508926877,
+      "scrolls": 959,
+      "sessionDuration": 1620632,
+      "timeOfDay": "2025-07-26T06:02:06.286Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.instagram.com/"
+    },
+    {
+      "domain": "chatgpt.com",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:08:03.478Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753510077176,
+      "scrolls": 0,
+      "sessionDuration": 6302,
+      "timeOfDay": "2025-07-26T06:07:57.176Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "domain": "www.indiabix.com",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:08:01.063Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753510081063,
+      "scrolls": 0,
+      "sessionDuration": 0,
+      "timeOfDay": "2025-07-26T06:08:01.063Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.indiabix.com/"
+    },
+    {
+      "domain": "www.google.com",
+      "clicks": 1,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T05:49:19.614Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753508955323,
+      "scrolls": 11,
+      "sessionDuration": 4291,
+      "timeOfDay": "2025-07-26T05:49:15.323Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.google.com/search?sca_esv=4f09092a201a8ac4&sxsrf=AE3TifMrZ7lCxb9zN1twZKarg8TZ_rjP2A:1753508953382&q=negative+news&tbm=nws&source=lnms&fbs=AIIjpHxU7SXXniUZfeShr2fp4giZrjP_Cx0LI1Ytb_FGcOviEiTm5uW1q0uNfK7KsnoL8hUyUYUJLZ_b-p0lT09DIkR7RtNt-9R1f9Pbq4mdMMyxSelEHHADgzBCNx7-1ORi0KL6PmuZlhCdFkfC14rwu1hVYz7VaOyiNZ1fR3MRh37FnT1xKvvetQpGv6CeYusk3UW5R7062AE1WaM4vJA2CkZ6VOjUqg&sa=X&sqi=2&ved=2ahUKEwjalZvy6dmOAxX1xzgGHQGfFqAQ0pQJKAF6BAgSEAE&biw=1422&bih=753&dpr=1.8"
+    },
+    {
+      "domain": "www.google.com",
+      "clicks": 1,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T05:49:15.284Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753508953002,
+      "scrolls": 0,
+      "sessionDuration": 2282,
+      "timeOfDay": "2025-07-26T05:49:13.001Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.google.com/search?q=negative+news&oq=&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MhUIARAAGEYY-QEYkQIYsQMYgAQYigUyBggCEEUYOzIMCAMQABhDGIAEGIoFMgwIBBAAGEMYgAQYigUyDAgFEAAYQxiABBiKBTIMCAYQABhDGIAEGIoFMgwIBxAAGEMYgAQYigUyCggIEAAYsQMYgAQyDAgJEAAYQxiABBiKBdIBCDI3OTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
+    }
+  ],
+  "uploadedAt": "2025-07-26T06:19:30.760Z"
+}

@@ -9,7 +9,8 @@
     "tabs",
     "scripting",
     "alarms",
-    "notifications"
+    "notifications",
+    "background"
   ],
   "host_permissions": [
     "http://localhost:5000/*",
@@ -35,4 +36,5 @@
       "matches": ["<all_urls>"]
     }
   ]
+  
 }
