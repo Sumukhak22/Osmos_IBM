@@ -1,32 +1,49 @@
 {
   "behavior": [
     {
-      "domain": "www.youtube.com",
-      "clicks": 24,
+      "domain": "www.canva.com",
+      "clicks": 1,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:19:19.751Z",
+      "lastUpdated": "2025-07-26T07:18:31.756Z",
       "mouseMovements": 0,
-      "pageLoadTime": 1753508929249,
-      "scrolls": 314,
-      "sessionDuration": 1830502,
-      "timeOfDay": "2025-07-26T06:18:27.481Z",
+      "pageLoadTime": 1753512702938,
+      "scrolls": 155,
+      "sessionDuration": 1608818,
+      "timeOfDay": "2025-07-26T07:09:57.084Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
         "totalTime": 0
       },
-      "url": "https://www.youtube.com/"
+      "url": "https://www.canva.com/"
+    },
+    {
+      "domain": "github.com",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T07:18:31.751Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753512172466,
+      "scrolls": 0,
+      "sessionDuration": 2139285,
+      "timeOfDay": "2025-07-26T06:58:34.726Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://github.com/"
     },
     {
       "domain": "www.instagram.com",
-      "clicks": 16,
+      "clicks": 27,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:18:31.758Z",
+      "lastUpdated": "2025-07-26T06:42:03.756Z",
       "mouseMovements": 0,
       "pageLoadTime": 1753510083013,
       "scrolls": 162,
-      "sessionDuration": 628745,
-      "timeOfDay": "2025-07-26T06:15:42.783Z",
+      "sessionDuration": 2040743,
+      "timeOfDay": "2025-07-26T06:41:58.275Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
@@ -35,15 +52,32 @@
       "url": "https://www.instagram.com/"
     },
     {
+      "domain": "www.youtube.com",
+      "clicks": 30,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:41:31.777Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753508929249,
+      "scrolls": 512,
+      "sessionDuration": 3162528,
+      "timeOfDay": "2025-07-26T06:24:46.433Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.youtube.com/"
+    },
+    {
       "domain": "chatgpt.com",
-      "clicks": 71,
-      "keystrokes": 425,
-      "lastUpdated": "2025-07-26T06:17:31.764Z",
+      "clicks": 108,
+      "keystrokes": 1303,
+      "lastUpdated": "2025-07-26T06:41:31.754Z",
       "mouseMovements": 0,
       "pageLoadTime": 1753509728877,
-      "scrolls": 1329,
-      "sessionDuration": 922887,
-      "timeOfDay": "2025-07-26T06:12:59.155Z",
+      "scrolls": 2980,
+      "sessionDuration": 2362877,
+      "timeOfDay": "2025-07-26T06:39:55.041Z",
       "typingSpeed": {
         "sessions": [
           {
@@ -117,29 +151,129 @@
             "keyCount": 17,
             "timestamp": "2025-07-26T06:10:59.752Z",
             "wpm": 87
+          },
+          {
+            "duration": 10.598,
+            "keyCount": 72,
+            "timestamp": "2025-07-26T06:20:03.115Z",
+            "wpm": 82
+          },
+          {
+            "duration": 25.72,
+            "keyCount": 124,
+            "timestamp": "2025-07-26T06:20:44.255Z",
+            "wpm": 58
+          },
+          {
+            "duration": 15.671,
+            "keyCount": 34,
+            "timestamp": "2025-07-26T06:21:04.895Z",
+            "wpm": 26
+          },
+          {
+            "duration": 29.661,
+            "keyCount": 168,
+            "timestamp": "2025-07-26T06:21:55.373Z",
+            "wpm": 68
+          },
+          {
+            "duration": 4.954,
+            "keyCount": 34,
+            "timestamp": "2025-07-26T06:22:04.227Z",
+            "wpm": 82
+          },
+          {
+            "duration": 69.188,
+            "keyCount": 14,
+            "timestamp": "2025-07-26T06:27:51.323Z",
+            "wpm": 2
+          },
+          {
+            "duration": 4.208,
+            "keyCount": 28,
+            "timestamp": "2025-07-26T06:27:59.547Z",
+            "wpm": 80
+          },
+          {
+            "duration": 16.68,
+            "keyCount": 117,
+            "timestamp": "2025-07-26T06:28:19.269Z",
+            "wpm": 84
+          },
+          {
+            "duration": 2.879,
+            "keyCount": 13,
+            "timestamp": "2025-07-26T06:28:24.345Z",
+            "wpm": 54
+          },
+          {
+            "duration": 25.033,
+            "keyCount": 136,
+            "timestamp": "2025-07-26T06:30:41.768Z",
+            "wpm": 65
+          },
+          {
+            "duration": 21.893,
+            "keyCount": 129,
+            "timestamp": "2025-07-26T06:32:43.938Z",
+            "wpm": 71
           }
         ],
-        "totalKeys": 414,
-        "totalTime": 247.98200000000003
+        "totalKeys": 1283,
+        "totalTime": 474.4670000000001
       },
       "url": "https://chatgpt.com/"
+    },
+    {
+      "domain": "web.archive.org",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:38:17.762Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753511777498,
+      "scrolls": 0,
+      "sessionDuration": 120264,
+      "timeOfDay": "2025-07-26T06:36:17.498Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://web.archive.org/"
     },
     {
       "domain": "www.nature.com",
       "clicks": 6,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:17:31.762Z",
+      "lastUpdated": "2025-07-26T06:36:15.068Z",
       "mouseMovements": 0,
       "pageLoadTime": 1753508961832,
       "scrolls": 427,
-      "sessionDuration": 1689930,
-      "timeOfDay": "2025-07-26T06:07:52.742Z",
+      "sessionDuration": 2813236,
+      "timeOfDay": "2025-07-26T06:36:09.864Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
         "totalTime": 0
       },
       "url": "https://www.nature.com/articles/s41598-025-10810-8"
+    },
+    {
+      "domain": "localhost",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T06:25:01.949Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753511101948,
+      "scrolls": 0,
+      "sessionDuration": 1,
+      "timeOfDay": "2025-07-26T06:25:01.947Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "http://localhost:5000/"
     },
     {
       "domain": "www.instagram.com",
@@ -227,5 +361,5 @@
       "url": "https://www.google.com/search?q=negative+news&oq=&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MhUIARAAGEYY-QEYkQIYsQMYgAQYigUyBggCEEUYOzIMCAMQABhDGIAEGIoFMgwIBBAAGEMYgAQYigUyDAgFEAAYQxiABBiKBTIMCAYQABhDGIAEGIoFMgwIBxAAGEMYgAQYigUyCggIEAAYsQMYgAQyDAgJEAAYQxiABBiKBdIBCDI3OTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
     }
   ],
-  "uploadedAt": "2025-07-26T06:19:30.760Z"
+  "uploadedAt": "2025-07-26T07:19:08.608Z"
 }

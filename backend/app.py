@@ -128,31 +128,24 @@ def handle_productive_urls():
 @app.route('/api/behavior-upload', methods=['POST'])
 def behavior_upload():
     data = request.get_json()
-
     if not data or 'behavior' not in data:
         return jsonify({"error": "Invalid payload"}), 400
 
-    # Save uploaded data to file
-    json_path = "latest_behavior_upload.json"
-    with open(json_path, "w") as f:
+    # Save the payload to a file
+    with open("latest_behavior_upload.json", "w") as f:
+        import json
         json.dump(data, f, indent=2)
 
-    try:
-        # Pass the saved JSON into the brain for analysis
-        with open(json_path, "r") as f:
-            session_json = f.read()
-        analysis_result = analyze_user_mental_health(session_json)
+    # Load the saved data back as a Python object
+    with open("latest_behavior_upload.json", "r") as f:
+        behavior_data = json.load(f)
 
-        return jsonify({
-            "status": "uploaded_and_analyzed",
-            "analysis": analysis_result
-        })
+    # Now pass the loaded data (not the filename) to your function
+    res = analyze_user_mental_health(behavior_data)
 
-    except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
+    print(json.dumps(res, indent=2))
+    return jsonify({"status": "success", "count": len(data['behavior'])}), 200
+
 
 @app.route('/api/usage-data', methods=['POST', 'OPTIONS'])
 def handle_usage_data():
