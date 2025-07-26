@@ -7,6 +7,7 @@ import threading
 from model import ProductivityModel
 from db import DatabaseManager
 from brain import analyze_user_mental_health
+from checkUrl import analyze_url
 
 app = Flask(__name__)
 CORS(app, resources={
@@ -130,7 +131,7 @@ def behavior_upload():
     data = request.get_json()
     if not data or 'behavior' not in data:
         return jsonify({"error": "Invalid payload"}), 400
-
+    
     # Save uploaded data to file
     json_path = "latest_behavior_upload.json"
     with open(json_path, "w") as f:
@@ -140,9 +141,9 @@ def behavior_upload():
         # Pass the saved JSON into the brain for analysis
         with open(json_path, "r") as f:
             session_json = f.read()
-            print(f"Session JSON: {session_json}")
+            # print(f"Session JSON: {session_json}")
         analysis_result = analyze_user_mental_health(session_json)
-        print(f"Analysis Result: {analysis_result}")
+        # print(f"Analysis Result: {analysis_result}")
         return jsonify({
             "status": "uploaded_and_analyzed",
             "analysis": analysis_result
@@ -243,6 +244,27 @@ def handle_tab_activity():
         # Store tab activity
         db_manager.store_tab_activity(tab_data)
         
+        # Analyze the URL and print response
+        url = tab_data['url']
+        if url:
+            try:
+                print(f"\n--- Analyzing URL: {url} ---")
+                url_analysis = analyze_url(url)
+                print(f"URL Analysis Response:")
+                print(json.dumps(url_analysis, indent=2))
+                print(f"--- End URL Analysis ---\n")
+                
+                # Optionally log specific parts
+                if url_analysis.get('thought'):
+                    print(f"Thought: {url_analysis['thought']}")
+                if url_analysis.get('action_input'):
+                    print(f"Action Input: {url_analysis['action_input']}")
+                    
+            except Exception as e:
+                print(f"Error analyzing URL {url}: {str(e)}")
+        else:
+            print("No URL provided for analysis")
+        
         # Analyze tab activity for patterns
         should_alert = model.analyze_tab_activity(tab_data)
         
@@ -258,6 +280,7 @@ def handle_tab_activity():
             'status': 'error',
             'message': f'Internal server error: {str(e)}'
         }), 500
+
 
 @app.route('/api/get-question', methods=['POST', 'OPTIONS'])
 def get_question():

@@ -21,9 +21,9 @@ import sqlite3
 import os
 
 # Configuration (replace with your actual credentials)
-API_KEY = "9DILRgDFfgMHhF7CXEbxObE1Bnbphh67tXuI6WPGv6mj"
-URL = "https://eu-de.ml.cloud.ibm.com"
-project_id = "8cd4c2e9-a16a-40f6-81bf-4af5cb3d6dea"
+API_KEY = "your_api_key_here"
+URL = "your_watsonx_url_here"
+project_id = "your_project_id_here"
 
 # LLM Configuration
 llm = WatsonxLLM(
@@ -43,7 +43,7 @@ llm = WatsonxLLM(
 class UserDataProcessor:
     """Process and prepare user behavioral data for mental health analysis"""
     
-    def __init__(self):
+    def _init_(self):
         self.db_path = "user_behavior_history.db"
         self.init_database()
         
@@ -214,7 +214,7 @@ class UserDataProcessor:
         # Excessive tab switching
         tab_switch_rate = features.get('tab_switch_rate', 0)
         historical_tab_rates = [self.extract_behavioral_features(h['session_data']).get('tab_switch_rate', 0) 
-                               for h in historical_data[-10:]]  # Last 10 sessions
+                                for h in historical_data[-10:]]  # Last 10 sessions
         baseline_tab_rate = np.mean(historical_tab_rates) if historical_tab_rates else 5
         
         stress_scores['excessive_tab_switching'] = min(1.0, max(0, 
@@ -237,7 +237,7 @@ class UserDataProcessor:
         # Decreased productivity
         current_productivity = features.get('productivity_ratio', 0)
         historical_productivity = [self.extract_behavioral_features(h['session_data']).get('productivity_ratio', 0) 
-                                  for h in historical_data[-10:]]
+                                   for h in historical_data[-10:]]
         baseline_productivity = np.mean(historical_productivity) if historical_productivity else 0.3
         
         productivity_decline = max(0, (baseline_productivity - current_productivity) / max(baseline_productivity, 0.1))
@@ -252,7 +252,7 @@ class UserDataProcessor:
 class MentalHealthAnalyzer:
     """Main class for analyzing mental health based on user behavior"""
     
-    def __init__(self):
+    def _init_(self):
         self.data_processor = UserDataProcessor()
         self.last_intervention_time = None
         self.intervention_cooldown = timedelta(hours=2)  # Minimum 2 hours between interventions
@@ -368,7 +368,7 @@ class MentalHealthAnalyzer:
 class MentalHealthTool:
     """Tool for the LangChain agent to analyze mental health"""
     
-    def __init__(self):
+    def _init_(self):
         self.analyzer = MentalHealthAnalyzer()
     
     def analyze_session(self, session_json: str) -> str:
@@ -413,7 +413,7 @@ You have access to the following tools:
 
 Based on research in digital wellness and mental health:
 - Excessive tab switching (>50 per hour) indicates anxiety or difficulty focusing
-- Late-night browsing (after 11 PM) suggests sleep disruption
+- Late-night Browse (after 11 PM) suggests sleep disruption
 - Repetitive site checking (>70% of visits to same sites) shows compulsive behavior
 - Decreased productivity coupled with increased activity indicates stress
 - Very short intense sessions suggest restlessness or agitation
@@ -432,23 +432,18 @@ When someone provides session data:
 Follow this format:
 Question: input question to answer
 Thought: consider previous and subsequent steps
-Action:
-```
-{{{{
-  "action": $TOOL_NAME,
-  "action_input": $INPUT
+Action:{{{{
+"action": $TOOL_NAME,
+"action_input": $INPUT
 }}}}
-```
+
 Observation: action result
 Thought: I know what to respond
 Action:
-```
 {{{{
-  "action": "Final Answer",
-  "action_input": "Final response to human"
+"action": "Final Answer",
+"action_input": "Final response to human"
 }}}}
-```
-
 Begin! Reminder to ALWAYS respond with a valid json blob of a single action.
 <|end_of_text|>"""
 
@@ -647,52 +642,111 @@ def analyze_with_llm_agent(session_data_json: str) -> Dict:
             'error': str(e),
             'intervention_required': False
         }
-if __name__ == "__main__":
-    # Test with the provided sample data
-    sample_data = """{
-        "sessionData": {
-            "sessionTime": 3971,
-            "tabSwitchCount": 84,
-            "timestamp": "2025-07-25T18:12:06.361Z"
-        },
-        "visitFrequency": {
-            "bnmit-students.contineo.in": 1,
-            "downloads": 1,
-            "extensions": 1,
-            "github.com": 10,
-            "monkeytype.com": 1,
-            "newtab": 8,
-            "supabase.com": 2,
-            "www.boot.dev": 1,
-            "www.dehashed.com": 1,
-            "www.google.com": 2,
-            "www.perplexity.ai": 1
-        },
-        "behaviorData": {
-            "github.com": [
-                {
-                    "clicks": 6,
-                    "keystrokes": 1,
-                    "scrolls": 132,
-                    "sessionDuration": 510731,
-                    "typingSpeed": {
-                        "sessions": [{"duration": 21.708, "keyCount": 111, "wpm": 61}],
-                        "totalKeys": 111,
-                        "totalTime": 21.708
-                    }
-                }
-            ]
-        },
-        "urlTimeSpent": {
-            "github.com": 465,
-            "www.perplexity.ai": 478
-        }
-    }"""
-    
-    print("Analyzing sample user session...")
-    result = analyze_user_mental_health(sample_data)
 
-    print(json.dumps(result, indent=2))
-    print([result['intervention_required']])
-    if result['intervention_required'] == False:
-        print("No intervention needed. User's digital habits are healthy.")
+# Helper function to transform new data format to the one expected by the analyzer
+def transform_and_aggregate_data(raw_behavior_data: list) -> dict:
+    """
+    Transforms raw behavior data (list of domain interactions) from 
+    latest_behavior_upload.json into the session format expected by the analyzer.
+    It processes the first 6 entries from the behavior list.
+    """
+    # Use only the first 6 entries as requested
+    behavior_slice = raw_behavior_data[:6]
+
+    # Initialize the structure for the final formatted data
+    formatted_data = {
+        "sessionData": {},
+        "visitFrequency": {},
+        "behaviorData": {},
+        "urlTimeSpent": {},
+        "distractionUrls": [],
+        "productiveUrls": [],
+        "rewardPoints": 0,
+        "exportedFrom": "ProductivityGuard_Aggregator"
+    }
+
+    total_session_time_ms = 0
+    latest_timestamp = "1970-01-01T00:00:00.000Z"
+
+    # Aggregate data from the slice
+    for entry in behavior_slice:
+        domain = entry.get("domain")
+        if not domain:
+            continue
+
+        # Aggregate for visitFrequency (counting occurrences of each domain in the slice)
+        formatted_data["visitFrequency"][domain] = formatted_data["visitFrequency"].get(domain, 0) + 1
+        
+        # Structure the behaviorData
+        if domain not in formatted_data["behaviorData"]:
+            formatted_data["behaviorData"][domain] = []
+        
+        behavior_entry = entry.copy()
+        if 'domain' in behavior_entry:
+            del behavior_entry['domain']
+        formatted_data["behaviorData"][domain].append(behavior_entry)
+        
+        # Aggregate for urlTimeSpent (converting ms to seconds)
+        duration_ms = entry.get("sessionDuration", 0)
+        formatted_data["urlTimeSpent"][domain] = formatted_data["urlTimeSpent"].get(domain, 0) + (duration_ms / 1000)
+        
+        total_session_time_ms += duration_ms
+
+        if entry.get("lastUpdated") and entry.get("lastUpdated") > latest_timestamp:
+            latest_timestamp = entry["lastUpdated"]
+
+    # Populate the main sessionData object
+    formatted_data["sessionData"] = {
+        "sessionTime": total_session_time_ms / 1000,  # Convert total time to seconds
+        "tabSwitchCount": len(behavior_slice),  # Using the number of domain interactions as a proxy
+        "timestamp": latest_timestamp
+    }
+    
+    # Add other fields for compatibility
+    formatted_data["todayStats"] = {
+        "activeTime": total_session_time_ms / 1000,
+        "distractionTime": 0,
+        "productiveTime": 0
+    }
+    formatted_data["exportTime"] = latest_timestamp
+
+    return formatted_data
+
+
+if __name__ == "__main__":
+    try:
+        # Load data from the specified JSON file
+        with open('latest_behavior_upload.json', 'r') as f:
+            raw_data = json.load(f)
+        
+        behavior_list = raw_data.get("behavior", [])
+        
+        if not behavior_list:
+            print("No behavior data found in 'latest_behavior_upload.json'.")
+        else:
+            # Transform the first 6 domains' data into the required format
+            transformed_data = transform_and_aggregate_data(behavior_list)
+            
+            # Convert the Python dictionary to a JSON string to pass to the analysis function
+            session_data_json = json.dumps(transformed_data)
+            
+            print("Analyzing user session from 'latest_behavior_upload.json'...")
+            result = analyze_user_mental_health(session_data_json)
+
+            # Print the final analysis result
+            print(json.dumps(result, indent=2))
+            
+            # Check and report the intervention status
+            if 'intervention_required' in result:
+                print(f"\nIntervention required: {result['intervention_required']}")
+                if not result['intervention_required']:
+                    print("No intervention needed. User's digital habits appear healthy.")
+            else:
+                 print("\nAnalysis result does not contain 'intervention_required' key.")
+
+    except FileNotFoundError:
+        print("Error: 'latest_behavior_upload.json' not found. Please ensure the file is in the same directory as brain.py.")
+    except json.JSONDecodeError:
+        print("Error: Could not decode JSON from 'latest_behavior_upload.json'. Please check the file's format.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")

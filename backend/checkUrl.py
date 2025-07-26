@@ -11,17 +11,20 @@ from langchain_core.runnables import RunnablePassthrough
 from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
 
 import requests
-
+import json
+import re
+import io
+import sys
+from contextlib import redirect_stdout, redirect_stderr
 
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from langchain.tools import Tool
-import re
 
 # Configuration (replace with your actual credentials)
-API_KEY = "9DILRgDFfgMHhF7CXEbxObE1Bnbphh67tXuI6WPGv6mj"
-URL = "https://eu-de.ml.cloud.ibm.com"
-project_id = "8cd4c2e9-a16a-40f6-81bf-4af5cb3d6dea"
+API_KEY = "your_api_key_here"
+URL = "your_watsonx_url_here"
+project_id = "your_project_id_here"
 
 # LLM Configuration
 llm = WatsonxLLM(
@@ -39,7 +42,7 @@ llm = WatsonxLLM(
 )
 
 class URLThoughtsTool:
-    def __init__(self):
+    def _init_(self):
         self.productive_indicators = [
             'documentation', 'tutorial', 'course', 'learning', 'education', 'research',
             'article', 'blog', 'news', 'professional', 'work', 'project', 'github',
@@ -96,6 +99,8 @@ class URLThoughtsTool:
             return "Shopping site - might be productive if it's for work, but could also be impulse buying territory."
         elif 'netflix.com' in domain or 'streaming' in domain:
             return "Streaming service - this is definitely entertainment time, not work time."
+        elif 'outlook.com' in domain:
+            return "Outlook - Microsoft's email service, definitely work-related and productive."
         else:
             return f"Unfamiliar domain '{domain}' - need to look at the actual content to judge this one."
 
@@ -150,7 +155,7 @@ class URLThoughtsTool:
         """Determine if URL is productive based on analysis"""
         thoughts_combined = (domain_thoughts + content_thoughts).lower()
         
-        positive_words = ['productive', 'learning', 'educational', 'useful', 'work', 'tutorial', 'development', 'github', 'stackoverflow', 'wikipedia']
+        positive_words = ['productive', 'learning', 'educational', 'useful', 'work', 'tutorial', 'development', 'github', 'stackoverflow', 'wikipedia', 'outlook', 'email']
         negative_words = ['entertainment', 'distraction', 'time sink', 'shopping', 'social media', 'impulse', 'streaming', 'gaming', 'meme']
         
         positive_count = sum(1 for word in positive_words if word in thoughts_combined)
@@ -205,21 +210,21 @@ Follow this format:
 Question: input question to answer
 Thought: consider previous and subsequent steps
 Action:
-```
+
 {{
   "action": $TOOL_NAME,
   "action_input": $INPUT
 }}
-```
+
 Observation: action result
 Thought: I know what to respond
 Action:
-```
+
 {{
   "action": "Final Answer",
   "action_input": "Final response to human"
 }}
-```
+
 
 Begin! Reminder to ALWAYS respond with a valid json blob of a single action.
 <|end_of_text|>"""
@@ -259,7 +264,7 @@ agent_executor = AgentExecutor(
     agent=chain, 
     tools=tools, 
     handle_parsing_errors=True, 
-    verbose=True,
+    verbose=False,  # Disabled verbose to hide chain output
     max_iterations=3
 )
 
@@ -270,29 +275,125 @@ agent_with_chat_history = RunnableWithMessageHistory(
     history_messages_key="chat_history",
 )
 
-# Modified function to return binary output
-def analyze_url(url):
-    """Analyze a URL and return '1' if productive, or thoughts if unproductive"""
+def extract_thought_and_action_input(captured_output):
+    """Extract both Thought and action_input from the captured output"""
     try:
-        result = agent_with_chat_history.invoke(
-            {"input": url},
-            config={"configurable": {"session_id": "url_thoughts"}}
-        )
-        return result['output']
+        result = {
+            "thought": None,
+            "action_input": None
+        }
+        
+        # Look for "Thought" field
+        thought_patterns = [
+            r'"Thought":\s*"([^"]*)"',
+            r"'Thought':\s*'([^']*)'",
+        ]
+        
+        for pattern in thought_patterns:
+            matches = re.findall(pattern, captured_output)
+            if matches:
+                result["thought"] = matches[-1]  # Get the last occurrence
+                break
+        
+        # Look for "action_input" field
+        action_input_patterns = [
+            r'"action_input":\s*"([^"]*)"',
+            r"'action_input':\s*'([^']*)'",
+        ]
+        
+        for pattern in action_input_patterns:
+            matches = re.findall(pattern, captured_output)
+            if matches:
+                result["action_input"] = matches[-1]  # Get the last occurrence
+                break
+        
+        return result
+        
     except Exception as e:
-        return f"Error analyzing URL: {str(e)}"
+        return {"thought": f"Error extracting: {str(e)}", "action_input": None}
+
+def analyze_url(url):
+    """Analyze a URL and return both thought and action_input"""
+    try:
+        # Capture stdout to get the verbose output even when verbose=False
+        stdout_buffer = io.StringIO()
+        
+        # Temporarily enable verbose to capture the parsing errors which contain our data
+        original_verbose = agent_executor.verbose
+        agent_executor.verbose = True
+        
+        captured_output = ""
+        result = None
+        
+        try:
+            with redirect_stdout(stdout_buffer):
+                result = agent_with_chat_history.invoke(
+                    {"input": url},
+                    config={"configurable": {"session_id": "url_thoughts"}}
+                )
+        except Exception as invoke_error:
+            # Even if invoke fails, we can extract from the captured output
+            pass
+        finally:
+            # Restore original verbose setting
+            agent_executor.verbose = original_verbose
+        
+        # Get the captured output
+        captured_output = stdout_buffer.getvalue()
+        
+        # Extract thought and action_input from the captured output
+        extracted = extract_thought_and_action_input(captured_output)
+        
+        # If we got a successful result, try to extract from that too
+        if result and isinstance(result, dict):
+            if "output" in result:
+                # Sometimes the result might be in the output field
+                result_extracted = extract_thought_and_action_input(str(result["output"]))
+                if result_extracted["action_input"]:
+                    extracted["action_input"] = result_extracted["action_input"]
+        
+        return extracted
+        
+    except Exception as e:
+        return {"thought": f"Error analyzing URL: {str(e)}", "action_input": None}
+
+def analyze_url_clean(url):
+    """Clean version that returns only the final values"""
+    result = analyze_url(url)
+    
+    # Return formatted result
+    if result["action_input"] and result["thought"]:
+        return {
+            "thought": result["thought"],
+            "action_input": result["action_input"]
+        }
+    elif result["action_input"]:
+        return {"action_input": result["action_input"]}
+    elif result["thought"]:
+        return {"thought": result["thought"]}
+    else:
+        return {"error": "Could not extract thought or action_input"}
 
 # Example usage
 if __name__ == "__main__":
     # Test with URLs
     test_urls = [
         "https://www.outlook.com",
-        "https://github.com/microsoft/vscode",
+        "https://github.com/microsoft/vscode", 
         "https://www.netflix.com",
         "https://stackoverflow.com/questions/12345"
     ]
     
+    print("=== Clean URL Analysis (No Chain Output) ===")
     for url in test_urls:
         print(f"URL: {url}")
-        print(f"Result: {analyze_url(url)}")
+        result = analyze_url_clean(url)
+        
+        if "thought" in result:
+            print(f"Thought: {result['thought']}")
+        if "action_input" in result:
+            print(f"Action Input: {result['action_input']}")
+        if "error" in result:
+            print(f"Error: {result['error']}")
+        
         print("-" * 50)
