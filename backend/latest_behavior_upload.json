@@ -1,15 +1,186 @@
 {
   "behavior": [
     {
+      "domain": "claude.ai",
+      "clicks": 61,
+      "keystrokes": 706,
+      "lastUpdated": "2025-07-26T08:58:54.752Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753519224426,
+      "scrolls": 1648,
+      "sessionDuration": 1110326,
+      "timeOfDay": "2025-07-26T08:58:10.369Z",
+      "typingSpeed": {
+        "sessions": [
+          {
+            "duration": 3.412,
+            "keyCount": 23,
+            "timestamp": "2025-07-26T08:40:31.715Z",
+            "wpm": 81
+          },
+          {
+            "duration": 13.847,
+            "keyCount": 68,
+            "timestamp": "2025-07-26T08:40:49.760Z",
+            "wpm": 59
+          },
+          {
+            "duration": 13.279,
+            "keyCount": 55,
+            "timestamp": "2025-07-26T08:41:13.476Z",
+            "wpm": 50
+          },
+          {
+            "duration": 4.682,
+            "keyCount": 29,
+            "timestamp": "2025-07-26T08:42:15.754Z",
+            "wpm": 74
+          },
+          {
+            "duration": 7.438,
+            "keyCount": 50,
+            "timestamp": "2025-07-26T08:42:30.758Z",
+            "wpm": 81
+          },
+          {
+            "duration": 17.878,
+            "keyCount": 140,
+            "timestamp": "2025-07-26T08:43:04.753Z",
+            "wpm": 94
+          },
+          {
+            "duration": 6.599,
+            "keyCount": 34,
+            "timestamp": "2025-07-26T08:43:18.559Z",
+            "wpm": 62
+          },
+          {
+            "duration": 6.32,
+            "keyCount": 49,
+            "timestamp": "2025-07-26T08:43:28.755Z",
+            "wpm": 93
+          },
+          {
+            "duration": 5.213,
+            "keyCount": 36,
+            "timestamp": "2025-07-26T08:44:06.905Z",
+            "wpm": 83
+          },
+          {
+            "duration": 2.734,
+            "keyCount": 15,
+            "timestamp": "2025-07-26T08:50:14.397Z",
+            "wpm": 66
+          },
+          {
+            "duration": 4.975,
+            "keyCount": 35,
+            "timestamp": "2025-07-26T08:50:30.587Z",
+            "wpm": 84
+          },
+          {
+            "duration": 3.099,
+            "keyCount": 17,
+            "timestamp": "2025-07-26T08:50:36.339Z",
+            "wpm": 66
+          },
+          {
+            "duration": 4.768,
+            "keyCount": 13,
+            "timestamp": "2025-07-26T08:50:46.293Z",
+            "wpm": 33
+          },
+          {
+            "duration": 3.324,
+            "keyCount": 21,
+            "timestamp": "2025-07-26T08:53:19.666Z",
+            "wpm": 76
+          },
+          {
+            "duration": 5.518,
+            "keyCount": 14,
+            "timestamp": "2025-07-26T08:53:27.551Z",
+            "wpm": 30
+          },
+          {
+            "duration": 3.573,
+            "keyCount": 25,
+            "timestamp": "2025-07-26T08:54:43.364Z",
+            "wpm": 84
+          },
+          {
+            "duration": 12.505,
+            "keyCount": 69,
+            "timestamp": "2025-07-26T08:56:27.764Z",
+            "wpm": 66
+          }
+        ],
+        "totalKeys": 693,
+        "totalTime": 119.16399999999999
+      },
+      "url": "https://claude.ai/new"
+    },
+    {
+      "domain": "quickref.me",
+      "clicks": 13,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:58:43.766Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753519123008,
+      "scrolls": 158,
+      "sessionDuration": 1200758,
+      "timeOfDay": "2025-07-26T08:58:11.119Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://quickref.me/"
+    },
+    {
+      "domain": "www.canva.com",
+      "clicks": 10,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:58:31.764Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753512702938,
+      "scrolls": 250,
+      "sessionDuration": 7608826,
+      "timeOfDay": "2025-07-26T08:49:12.411Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.canva.com/"
+    },
+    {
+      "domain": "www.python.org",
+      "clicks": 12,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:58:31.757Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517643687,
+      "scrolls": 234,
+      "sessionDuration": 2668070,
+      "timeOfDay": "2025-07-26T08:47:58.014Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.python.org/downloads/release/python-3124/"
+    },
+    {
       "domain": "github.com",
       "clicks": 6,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T08:07:14.193Z",
+      "lastUpdated": "2025-07-26T08:48:52.757Z",
       "mouseMovements": 0,
       "pageLoadTime": 1753512172466,
       "scrolls": 49,
-      "sessionDuration": 5061727,
-      "timeOfDay": "2025-07-26T08:07:04.417Z",
+      "sessionDuration": 7560291,
+      "timeOfDay": "2025-07-26T08:47:58.421Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
@@ -18,21 +189,106 @@
       "url": "https://github.com/"
     },
     {
-      "domain": "www.canva.com",
-      "clicks": 6,
+      "domain": "claude.ai",
+      "clicks": 1,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T08:06:31.771Z",
+      "lastUpdated": "2025-07-26T08:40:23.816Z",
       "mouseMovements": 0,
-      "pageLoadTime": 1753512702938,
-      "scrolls": 155,
-      "sessionDuration": 4488833,
-      "timeOfDay": "2025-07-26T08:04:38.466Z",
+      "pageLoadTime": 1753519193814,
+      "scrolls": 0,
+      "sessionDuration": 30002,
+      "timeOfDay": "2025-07-26T08:39:53.814Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
         "totalTime": 0
       },
-      "url": "https://www.canva.com/"
+      "url": "https://claude.ai/"
+    },
+    {
+      "domain": "www.perplexity.ai",
+      "clicks": 2,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:15:51.950Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517742264,
+      "scrolls": 34,
+      "sessionDuration": 9686,
+      "timeOfDay": "2025-07-26T08:15:43.027Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.perplexity.ai/"
+    },
+    {
+      "domain": "www.perplexity.ai",
+      "clicks": 4,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:15:39.398Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517689748,
+      "scrolls": 137,
+      "sessionDuration": 49650,
+      "timeOfDay": "2025-07-26T08:14:50.600Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.perplexity.ai/"
+    },
+    {
+      "domain": "www.google.com",
+      "clicks": 1,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:14:03.635Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517637726,
+      "scrolls": 0,
+      "sessionDuration": 5909,
+      "timeOfDay": "2025-07-26T08:13:59.547Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.google.com/search?q=python+3.12.4+download&oq=python+3.12.4&gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBggBEEUYOTIHCAIQABiABDIICAMQABgWGB4yCAgEEAAYFhgeMggIBRAAGBYYHjIICAYQABgWGB4yCAgHEAAYFhgeMggICBAAGBYYHjIKCAkQABgKGBYYHqgCALACAA&sourceid=chrome&ie=UTF-8"
+    },
+    {
+      "domain": "www.google.com",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:13:54.955Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517634955,
+      "scrolls": 0,
+      "sessionDuration": 0,
+      "timeOfDay": "2025-07-26T08:13:54.955Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.google.com/search?q=python+3.12&oq=python+3.12&gs_lcrp=EgZjaHJvbWUyDAgAEEUYORixAxiABDINCAEQABiDARixAxiABDIHCAIQABiABDIHCAMQABiABDIHCAQQABiABDIHCAUQABiABDIHCAYQABiABDIHCAcQABiABDIHCAgQABiABDIHCAkQABiABKgCALACAA&sourceid=chrome&ie=UTF-8"
+    },
+    {
+      "domain": "www.perplexity.ai",
+      "clicks": 0,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:13:48.956Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753517628956,
+      "scrolls": 0,
+      "sessionDuration": 0,
+      "timeOfDay": "2025-07-26T08:13:48.955Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://www.perplexity.ai/"
     },
     {
       "domain": "localhost",
@@ -325,58 +581,7 @@
         "totalTime": 0
       },
       "url": "https://chatgpt.com/"
-    },
-    {
-      "domain": "www.indiabix.com",
-      "clicks": 0,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T06:08:01.063Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753510081063,
-      "scrolls": 0,
-      "sessionDuration": 0,
-      "timeOfDay": "2025-07-26T06:08:01.063Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://www.indiabix.com/"
-    },
-    {
-      "domain": "www.google.com",
-      "clicks": 1,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T05:49:19.614Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753508955323,
-      "scrolls": 11,
-      "sessionDuration": 4291,
-      "timeOfDay": "2025-07-26T05:49:15.323Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://www.google.com/search?sca_esv=4f09092a201a8ac4&sxsrf=AE3TifMrZ7lCxb9zN1twZKarg8TZ_rjP2A:1753508953382&q=negative+news&tbm=nws&source=lnms&fbs=AIIjpHxU7SXXniUZfeShr2fp4giZrjP_Cx0LI1Ytb_FGcOviEiTm5uW1q0uNfK7KsnoL8hUyUYUJLZ_b-p0lT09DIkR7RtNt-9R1f9Pbq4mdMMyxSelEHHADgzBCNx7-1ORi0KL6PmuZlhCdFkfC14rwu1hVYz7VaOyiNZ1fR3MRh37FnT1xKvvetQpGv6CeYusk3UW5R7062AE1WaM4vJA2CkZ6VOjUqg&sa=X&sqi=2&ved=2ahUKEwjalZvy6dmOAxX1xzgGHQGfFqAQ0pQJKAF6BAgSEAE&biw=1422&bih=753&dpr=1.8"
-    },
-    {
-      "domain": "www.google.com",
-      "clicks": 1,
-      "keystrokes": 0,
-      "lastUpdated": "2025-07-26T05:49:15.284Z",
-      "mouseMovements": 0,
-      "pageLoadTime": 1753508953002,
-      "scrolls": 0,
-      "sessionDuration": 2282,
-      "timeOfDay": "2025-07-26T05:49:13.001Z",
-      "typingSpeed": {
-        "sessions": [],
-        "totalKeys": 0,
-        "totalTime": 0
-      },
-      "url": "https://www.google.com/search?q=negative+news&oq=&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MhUIARAAGEYY-QEYkQIYsQMYgAQYigUyBggCEEUYOzIMCAMQABhDGIAEGIoFMgwIBBAAGEMYgAQYigUyDAgFEAAYQxiABBiKBTIMCAYQABhDGIAEGIoFMgwIBxAAGEMYgAQYigUyCggIEAAYsQMYgAQyDAgJEAAYQxiABBiKBdIBCDI3OTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
     }
   ],
-  "uploadedAt": "2025-07-26T08:07:20.763Z"
+  "uploadedAt": "2025-07-26T08:58:56.761Z"
 }

@@ -6,7 +6,7 @@ import os
 import threading
 from model import ProductivityModel
 from db import DatabaseManager
-# from brain import analyze_user_mental_health
+from brain import analyze_user_mental_health
 
 app = Flask(__name__)
 CORS(app, resources={
@@ -131,11 +131,29 @@ def behavior_upload():
     if not data or 'behavior' not in data:
         return jsonify({"error": "Invalid payload"}), 400
 
-    with open("latest_behavior_upload.json", "w") as f:
-        import json
+    # Save uploaded data to file
+    json_path = "latest_behavior_upload.json"
+    with open(json_path, "w") as f:
         json.dump(data, f, indent=2)
 
-    return jsonify({"status": "success", "count": len(data['behavior'])}), 200
+    try:
+        # Pass the saved JSON into the brain for analysis
+        with open(json_path, "r") as f:
+            session_json = f.read()
+            print(f"Session JSON: {session_json}")
+        analysis_result = analyze_user_mental_health(session_json)
+        print(f"Analysis Result: {analysis_result}")
+        return jsonify({
+            "status": "uploaded_and_analyzed",
+            "analysis": analysis_result
+        })
+
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
 
 
 @app.route('/api/usage-data', methods=['POST', 'OPTIONS'])
