@@ -3,83 +3,165 @@ from flask_cors import CORS
 from datetime import datetime, timedelta
 import json
 import os
+import threading
 from model import ProductivityModel
 from db import DatabaseManager
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
 
-# Initialize components
-db_manager = DatabaseManager()
-model = ProductivityModel()
+# Thread-local storage for database connections
+local_data = threading.local()
 
-@app.route('/api/distraction-urls', methods=['POST'])
+def get_db_manager():
+    """Get thread-local database manager"""
+    if not hasattr(local_data, 'db_manager'):
+        local_data.db_manager = DatabaseManager()
+        local_data.db_manager.initialize_database()
+    return local_data.db_manager
+
+def get_model():
+    """Get thread-local model"""
+    if not hasattr(local_data, 'model'):
+        local_data.model = ProductivityModel()
+    return local_data.model
+
+@app.route('/api/distraction-urls', methods=['POST', 'OPTIONS'])
 def handle_distraction_urls():
     """Handle distraction URLs from extension"""
     try:
-        data = request.json
+        data = get_request_data()
+        print(f"Received data: {data}")
+        
+        if not data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No data provided'
+            }), 400
+            
         urls = data.get('urls', [])
-        user_id = data.get('user_id', 'default_user')  # In real app, get from auth
+        user_id = data.get('user_id', 'default_user')
+        
+        # Validate URLs
+        if not isinstance(urls, list):
+            return jsonify({
+                'status': 'error',
+                'message': 'URLs must be a list'
+            }), 400
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         # Store in database
         db_manager.store_distraction_urls(user_id, urls)
         
         # Update model with new data
-        model.update_distraction_patterns(user_id, urls)
+        model.update_distraction_patterns(user_id, [{'url': url} for url in urls])
         
         return jsonify({
             'status': 'success',
-            'message': 'Distraction URLs updated'
+            'message': 'Distraction URLs updated',
+            'count': len(urls)
         })
     
     except Exception as e:
+        print(f"Error in handle_distraction_urls: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': f'Internal server error: {str(e)}'
         }), 500
 
-@app.route('/api/productive-urls', methods=['POST'])
+@app.route('/api/productive-urls', methods=['POST', 'OPTIONS'])
 def handle_productive_urls():
     """Handle productive URLs from extension"""
     try:
-        data = request.json
+        data = get_request_data()
+        print(f"Received data: {data}")
+        
+        if not data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No data provided'
+            }), 400
+            
         urls = data.get('urls', [])
         user_id = data.get('user_id', 'default_user')
+        
+        # Validate URLs
+        if not isinstance(urls, list):
+            return jsonify({
+                'status': 'error',
+                'message': 'URLs must be a list'
+            }), 400
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         # Store in database
         db_manager.store_productive_urls(user_id, urls)
         
         # Update model with new data
-        model.update_productive_patterns(user_id, urls)
+        model.update_productive_patterns(user_id, [{'url': url} for url in urls])
         
         return jsonify({
             'status': 'success',
-            'message': 'Productive URLs updated'
+            'message': 'Productive URLs updated',
+            'count': len(urls)
         })
     
     except Exception as e:
+        print(f"Error in handle_productive_urls: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': f'Internal server error: {str(e)}'
         }), 500
 
-@app.route('/api/usage-data', methods=['POST'])
+@app.route('/api/usage-data', methods=['POST', 'OPTIONS'])
 def handle_usage_data():
     """Handle usage data from extension"""
     try:
-        data = request.json
+        data = get_request_data()
+        print(f"Received data: {data}")
+        
+        if not data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No data provided'
+            }), 400
+            
         user_id = data.get('user_id', 'default_user')
+        
+        # Validate required fields
+        required_fields = ['url', 'domain', 'duration']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Missing required field: {field}'
+                }), 400
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         # Store usage data
         usage_entry = {
             'user_id': user_id,
             'url': data.get('url'),
             'domain': data.get('domain'),
-            'duration': data.get('duration'),
+            'duration': int(data.get('duration', 0)),
             'interactions': data.get('interactions', {}),
-            'timestamp': data.get('timestamp'),
-            'is_distraction': data.get('isDistraction', False),
-            'is_productive': data.get('isProductive', False)
+            'timestamp': data.get('timestamp', datetime.now().isoformat()),
+            'is_distraction': bool(data.get('isDistraction', False)),
+            'is_productive': bool(data.get('isProductive', False))
         }
         
         db_manager.store_usage_data(usage_entry)
@@ -93,24 +175,37 @@ def handle_usage_data():
         })
     
     except Exception as e:
+        print(f"Error in handle_usage_data: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': f'Internal server error: {str(e)}'
         }), 500
 
-@app.route('/api/tab-activity', methods=['POST'])
+@app.route('/api/tab-activity', methods=['POST', 'OPTIONS'])
 def handle_tab_activity():
     """Handle tab activity data"""
     try:
-        data = request.json
+        data = get_request_data()
+        print(f"Received data: {data}")
+        
+        if not data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No data provided'
+            }), 400
+            
         user_id = data.get('user_id', 'default_user')
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         tab_data = {
             'user_id': user_id,
-            'url': data.get('url'),
-            'title': data.get('title'),
-            'timestamp': data.get('timestamp'),
-            'time_of_day': data.get('timeOfDay')
+            'url': data.get('url', ''),
+            'title': data.get('title', ''),
+            'timestamp': data.get('timestamp', datetime.now().isoformat()),
+            'time_of_day': int(data.get('timeOfDay', datetime.now().hour))
         }
         
         # Store tab activity
@@ -126,19 +221,33 @@ def handle_tab_activity():
         return jsonify(response)
     
     except Exception as e:
+        print(f"Error in handle_tab_activity: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': f'Internal server error: {str(e)}'
         }), 500
 
-@app.route('/api/get-question', methods=['POST'])
+@app.route('/api/get-question', methods=['POST', 'OPTIONS'])
 def get_question():
     """Get AI-generated question for user when they exceed limits"""
     try:
-        data = request.json
-        domain = data.get('domain')
-        excess_time = data.get('excessTime', 0)
+        data = get_request_data()
+        print(f"Received data: {data}")
+        
+        if not data:
+            return jsonify({
+                'question': 'You have exceeded your time limit. Do you want to continue?',
+                'domain': 'unknown',
+                'timestamp': datetime.now().isoformat()
+            })
+            
+        domain = data.get('domain', 'unknown')
+        excess_time = int(data.get('excessTime', 0))
         user_id = data.get('user_id', 'default_user')
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         # Get user's context and history
         user_context = db_manager.get_user_context(user_id)
@@ -157,19 +266,34 @@ def get_question():
         })
     
     except Exception as e:
+        print(f"Error in get_question: {str(e)}")
         return jsonify({
-            'question': 'You have exceeded your time limit. Do you want to continue?'
+            'question': 'You have exceeded your time limit. Do you want to continue?',
+            'domain': data.get('domain', 'unknown') if data else 'unknown',
+            'timestamp': datetime.now().isoformat()
         })
 
-@app.route('/api/question-answer', methods=['POST'])
+@app.route('/api/question-answer', methods=['POST', 'OPTIONS'])
 def handle_question_answer():
     """Handle user's answer to intervention question"""
     try:
-        data = request.json
-        answer = data.get('answer')
-        domain = data.get('domain')
+        data = get_request_data()
+        print(f"Received data: {data}")
+        
+        if not data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No data provided'
+            }), 400
+            
+        answer = data.get('answer', '')
+        domain = data.get('domain', 'unknown')
         user_id = data.get('user_id', 'default_user')
-        timestamp = data.get('timestamp')
+        timestamp = data.get('timestamp', datetime.now().isoformat())
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         # Store the interaction
         interaction = {
@@ -200,9 +324,10 @@ def handle_question_answer():
         return jsonify(response)
     
     except Exception as e:
+        print(f"Error in handle_question_answer: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': f'Internal server error: {str(e)}'
         }), 500
 
 @app.route('/api/get-insights', methods=['GET'])
@@ -210,6 +335,10 @@ def get_insights():
     """Get AI-generated insights about user's productivity patterns"""
     try:
         user_id = request.args.get('user_id', 'default_user')
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         # Get user data
         user_data = db_manager.get_user_analytics_data(user_id)
@@ -223,17 +352,24 @@ def get_insights():
         })
     
     except Exception as e:
+        print(f"Error in get_insights: {str(e)}")
         return jsonify({
-            'insights': [],
-            'error': str(e)
+            'insights': ['Unable to generate insights at this time'],
+            'error': str(e),
+            'generated_at': datetime.now().isoformat()
         }), 500
 
-@app.route('/api/adjust-limits', methods=['POST'])
+@app.route('/api/adjust-limits', methods=['POST', 'OPTIONS'])
 def adjust_limits():
     """Adjust time limits based on AI recommendations"""
     try:
-        data = request.json
-        user_id = data.get('user_id', 'default_user')
+        data = get_request_data()
+        print(f"Received data: {data}")
+        user_id = data.get('user_id', 'default_user') if data else 'default_user'
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         # Get current user performance
         performance_data = db_manager.get_user_performance(user_id)
@@ -255,9 +391,10 @@ def adjust_limits():
         })
     
     except Exception as e:
+        print(f"Error in adjust_limits: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': f'Internal server error: {str(e)}'
         }), 500
 
 @app.route('/api/daily-summary', methods=['GET'])
@@ -266,6 +403,10 @@ def get_daily_summary():
     try:
         user_id = request.args.get('user_id', 'default_user')
         date = request.args.get('date', datetime.now().strftime('%Y-%m-%d'))
+        
+        # Get thread-local instances
+        db_manager = get_db_manager()
+        model = get_model()
         
         # Get daily data
         daily_data = db_manager.get_daily_data(user_id, date)
@@ -280,19 +421,40 @@ def get_daily_summary():
         })
     
     except Exception as e:
+        print(f"Error in get_daily_summary: {str(e)}")
         return jsonify({
-            'summary': {},
-            'error': str(e)
+            'summary': {
+                'total_productive_time': 0,
+                'total_distraction_time': 0,
+                'key_insights': ['Unable to generate summary at this time']
+            },
+            'error': str(e),
+            'date': request.args.get('date', datetime.now().strftime('%Y-%m-%d')),
+            'generated_at': datetime.now().isoformat()
         }), 500
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
-    return jsonify({
-        'status': 'healthy',
-        'timestamp': datetime.now().isoformat(),
-        'version': '1.0.0'
-    })
+    try:
+        # Test database connection
+        db_manager = get_db_manager()
+        db_manager.cursor.execute('SELECT 1')
+        
+        return jsonify({
+            'status': 'healthy',
+            'timestamp': datetime.now().isoformat(),
+            'version': '1.0.0',
+            'database': 'connected'
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'unhealthy',
+            'timestamp': datetime.now().isoformat(),
+            'version': '1.0.0',
+            'database': 'disconnected',
+            'error': str(e)
+        }), 500
 
 @app.errorhandler(404)
 def not_found(error):
@@ -303,16 +465,66 @@ def not_found(error):
 
 @app.errorhandler(500)
 def internal_error(error):
+    print(f"Internal server error: {str(error)}")
     return jsonify({
         'status': 'error',
         'message': 'Internal server error'
     }), 500
 
+@app.before_request
+def handle_preflight():
+    """Handle CORS preflight requests and log incoming requests"""
+    print(f"Request: {request.method} {request.path}")
+    print(f"Content-Type: {request.content_type}")
+    print(f"Headers: {dict(request.headers)}")
+    
+    if request.method == "OPTIONS":
+        response = jsonify({})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+        response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
+        return response
+
+def get_request_data():
+    """Helper function to get request data regardless of content type"""
+    try:
+        # Try to get JSON data first
+        if request.is_json:
+            return request.get_json()
+        
+        # If content-type is not set properly but data looks like JSON
+        if request.data:
+            import json
+            try:
+                return json.loads(request.data.decode('utf-8'))
+            except:
+                pass
+        
+        # Try form data
+        if request.form:
+            return request.form.to_dict()
+        
+        # Try args for GET requests
+        if request.args:
+            return request.args.to_dict()
+            
+        return None
+    except Exception as e:
+        print(f"Error getting request data: {e}")
+        return None
+
 if __name__ == '__main__':
-    # Initialize database
-    db_manager.initialize_database()
+    # Initialize database once at startup
+    try:
+        initial_db = DatabaseManager()
+        initial_db.initialize_database()
+        initial_db.close()
+        print("Database initialized successfully")
+    except Exception as e:
+        print(f"Database initialization error: {e}")
     
     # Start the server
+    print("Starting Flask server...")
     app.run(
         host='localhost',
         port=5000,
