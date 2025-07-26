@@ -524,7 +524,7 @@ async function autoUploadLatestBehavior() {
 
 // Start 1-min interval for uploading data
 function startAutoUploadTimer() {
-    setInterval(autoUploadLatestBehavior, 60000); // every 60 seconds
+    setInterval(autoUploadLatestBehavior, 10000); // every 60 seconds
 }
 
 // Call it on popup open

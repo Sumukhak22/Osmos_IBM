@@ -482,4 +482,4 @@ async function autoUploadLatestBehavior() {
 // Start the 1-minute timer
 setInterval(() => {
     autoUploadLatestBehavior();
-}, 60000); // Every 60 seconds
+}, 10000); // Every 60 seconds

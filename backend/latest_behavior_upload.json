@@ -1,15 +1,32 @@
 {
   "behavior": [
     {
-      "domain": "www.canva.com",
-      "clicks": 1,
+      "domain": "github.com",
+      "clicks": 6,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T07:18:31.756Z",
+      "lastUpdated": "2025-07-26T08:07:14.193Z",
+      "mouseMovements": 0,
+      "pageLoadTime": 1753512172466,
+      "scrolls": 49,
+      "sessionDuration": 5061727,
+      "timeOfDay": "2025-07-26T08:07:04.417Z",
+      "typingSpeed": {
+        "sessions": [],
+        "totalKeys": 0,
+        "totalTime": 0
+      },
+      "url": "https://github.com/"
+    },
+    {
+      "domain": "www.canva.com",
+      "clicks": 6,
+      "keystrokes": 0,
+      "lastUpdated": "2025-07-26T08:06:31.771Z",
       "mouseMovements": 0,
       "pageLoadTime": 1753512702938,
       "scrolls": 155,
-      "sessionDuration": 1608818,
-      "timeOfDay": "2025-07-26T07:09:57.084Z",
+      "sessionDuration": 4488833,
+      "timeOfDay": "2025-07-26T08:04:38.466Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
@@ -18,21 +35,21 @@
       "url": "https://www.canva.com/"
     },
     {
-      "domain": "github.com",
+      "domain": "localhost",
       "clicks": 0,
       "keystrokes": 0,
-      "lastUpdated": "2025-07-26T07:18:31.751Z",
+      "lastUpdated": "2025-07-26T08:03:46.730Z",
       "mouseMovements": 0,
-      "pageLoadTime": 1753512172466,
+      "pageLoadTime": 1753517026729,
       "scrolls": 0,
-      "sessionDuration": 2139285,
-      "timeOfDay": "2025-07-26T06:58:34.726Z",
+      "sessionDuration": 1,
+      "timeOfDay": "2025-07-26T08:03:46.729Z",
       "typingSpeed": {
         "sessions": [],
         "totalKeys": 0,
         "totalTime": 0
       },
-      "url": "https://github.com/"
+      "url": "http://localhost:5000/"
     },
     {
       "domain": "www.instagram.com",
@@ -361,5 +378,5 @@
       "url": "https://www.google.com/search?q=negative+news&oq=&gs_lcrp=EgZjaHJvbWUqBggCEEUYOzIGCAAQRRg5MhUIARAAGEYY-QEYkQIYsQMYgAQYigUyBggCEEUYOzIMCAMQABhDGIAEGIoFMgwIBBAAGEMYgAQYigUyDAgFEAAYQxiABBiKBTIMCAYQABhDGIAEGIoFMgwIBxAAGEMYgAQYigUyCggIEAAYsQMYgAQyDAgJEAAYQxiABBiKBdIBCDI3OTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
     }
   ],
-  "uploadedAt": "2025-07-26T07:19:08.608Z"
+  "uploadedAt": "2025-07-26T08:07:20.763Z"
 }
